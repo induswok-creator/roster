@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Restaurant Daily & Monthly Roster System</title>
+  <title>Restaurant Daily Operations & Roster System</title>
   <style>
     :root {
       --primary: #1e3a8a;
@@ -165,7 +165,7 @@
     /* Summary Cards */
     .summary-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
       gap: 16px;
       margin-bottom: 24px;
     }
@@ -203,6 +203,17 @@
       font-weight: 500;
     }
 
+    .station-badge {
+      font-size: 0.78rem;
+      color: #1e3a8a;
+      background: #eff6ff;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-weight: 600;
+      margin-top: 6px;
+      display: inline-block;
+    }
+
     .staff-join-meta {
       font-size: 0.75rem;
       color: #64748b;
@@ -213,7 +224,7 @@
       display: inline-block;
       padding: 4px 10px;
       border-radius: 20px;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 700;
       margin-top: 8px;
       text-align: center;
@@ -258,7 +269,7 @@
       left: 0;
       background: #f8fafc;
       z-index: 20;
-      min-width: 170px;
+      min-width: 180px;
       box-shadow: 2px 0 5px rgba(0,0,0,0.05);
     }
 
@@ -359,15 +370,15 @@
       font-size: 0.8rem;
     }
 
-    /* Daily Roster Tab Styles */
+    /* Daily Tab Layout */
     .daily-container {
       display: grid;
-      grid-template-columns: 320px 1fr;
+      grid-template-columns: 310px 1fr;
       gap: 24px;
       align-items: start;
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 950px) {
       .daily-container {
         grid-template-columns: 1fr;
       }
@@ -398,10 +409,6 @@
       outline: none;
     }
 
-    .date-picker-card input[type="date"]:focus {
-      border-color: var(--primary);
-    }
-
     .quick-dates {
       display: flex;
       flex-direction: column;
@@ -422,7 +429,7 @@
       align-items: center;
     }
 
-    .quick-date-btn:hover, .quick-date-btn.active {
+    .quick-date-btn:hover {
       background: var(--primary);
       color: white;
       border-color: var(--primary);
@@ -448,76 +455,209 @@
     }
 
     .daily-card-header h2 {
-      font-size: 1.6rem;
+      font-size: 1.5rem;
     }
 
-    .daily-card-header span {
-      background: rgba(255,255,255,0.2);
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 0.9rem;
-      font-weight: 600;
-    }
-
-    .daily-sections {
-      padding: 24px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 24px;
-    }
-
-    .section-box {
-      border: 1px solid var(--border);
+    .cleaning-toggle-box {
+      background: rgba(255,255,255,0.15);
+      padding: 8px 16px;
       border-radius: 12px;
-      padding: 16px;
-      background: #f8fafc;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border: 1px solid rgba(255,255,255,0.3);
     }
 
-    .section-box h4 {
-      font-size: 1rem;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 12px;
-      padding-bottom: 8px;
-      border-bottom: 2px solid var(--border);
+    .cleaning-toggle-box label {
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 48px;
+      height: 26px;
+    }
+
+    .switch input { opacity: 0; width: 0; height: 0; }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: rgba(0,0,0,0.3);
+      transition: .3s;
+      border-radius: 26px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 20px; width: 20px;
+      left: 3px; bottom: 3px;
+      background-color: white;
+      transition: .3s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider { background-color: #10b981; }
+    input:checked + .slider:before { transform: translateX(22px); }
+
+    .daily-content {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .section-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #1e3a8a;
+      margin-bottom: 14px;
       display: flex;
       align-items: center;
       gap: 8px;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 8px;
     }
 
-    .staff-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px;
-      background: white;
-      border-radius: 8px;
-      margin-bottom: 8px;
+    /* Operations Table */
+    .ops-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
       border: 1px solid var(--border);
-      box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+      border-radius: 12px;
+      overflow: hidden;
     }
 
-    .staff-row:last-child {
-      margin-bottom: 0;
+    .ops-table th {
+      background: #f1f5f9;
+      color: #334155;
+      padding: 12px 14px;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid var(--border);
+      border-right: none;
     }
 
-    .staff-row .info .name {
+    .ops-table td {
+      padding: 14px;
+      border-bottom: 1px solid var(--border);
+      border-right: none;
+      text-align: left;
+      height: auto;
+      vertical-align: middle;
+    }
+
+    .ops-table tr:last-child td { border-bottom: none; }
+
+    .staff-station-cell {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .staff-station-cell .s-name { font-weight: 700; font-size: 1rem; color: var(--text-main); }
+    .staff-station-cell .s-role { font-size: 0.8rem; color: var(--text-muted); }
+
+    .att-select {
+      padding: 6px 12px;
+      border-radius: 8px;
       font-weight: 700;
-      color: var(--text-main);
+      font-size: 0.85rem;
+      border: 2px solid var(--border);
+      outline: none;
+      cursor: pointer;
     }
 
-    .staff-row .info .role {
-      font-size: 0.8rem;
-      color: var(--text-muted);
+    .att-Present { background: #d1fae5; color: #065f46; border-color: #a7f3d0; }
+    .att-Late { background: #fef3c7; color: #92400e; border-color: #fde68a; }
+    .att-Absent { background: #ffe4e6; color: #9f1239; border-color: #fecdd3; }
+    .att-Leave { background: #e0f2fe; color: #0369a1; border-color: #bae6fd; }
+
+    .time-inputs {
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
-    .badge {
-      padding: 4px 10px;
+    .time-inputs input {
+      width: 85px;
+      padding: 6px 8px;
+      border: 1px solid var(--border);
       border-radius: 6px;
-      font-size: 0.8rem;
-      font-weight: 700;
+      font-size: 0.85rem;
+      text-align: center;
+      font-weight: 600;
     }
+
+    /* Deep Cleaning Box */
+    .cleaning-checklist-box {
+      background: #f0fdf4;
+      border: 2px solid #86efac;
+      border-radius: 16px;
+      padding: 20px;
+      display: none;
+    }
+
+    .cleaning-checklist-box.show {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    .clean-task-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .clean-task-item {
+      background: white;
+      padding: 14px;
+      border-radius: 10px;
+      border: 1px solid #bbf7d0;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .clean-task-item:hover { box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+    .clean-task-item.checked { background: #dcfce7; opacity: 0.75; text-decoration: line-through; }
+
+    .clean-task-item input[type="checkbox"] {
+      width: 20px; height: 20px;
+      margin-top: 2px;
+      accent-color: #16a34a;
+      cursor: pointer;
+    }
+
+    .task-desc { font-size: 0.88rem; color: #166534; }
+    .task-station { font-weight: 800; font-size: 0.95rem; color: #14532d; display: block; }
+
+    /* Notes Box */
+    .notes-area {
+      width: 100%;
+      height: 90px;
+      padding: 12px;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      font-size: 0.95rem;
+      outline: none;
+      resize: vertical;
+    }
+
+    .notes-area:focus { border-color: var(--primary); }
 
     .daily-footer {
       padding: 20px 24px;
@@ -545,9 +685,7 @@
       transition: background 0.2s;
     }
 
-    .btn-whatsapp:hover {
-      background: #16a34a;
-    }
+    .btn-whatsapp:hover { background: #16a34a; }
 
     .btn-print {
       background: #475569;
@@ -558,128 +696,54 @@
       font-weight: 700;
       font-size: 1rem;
       cursor: pointer;
-      transition: background 0.2s;
     }
 
-    .btn-print:hover {
-      background: #334155;
-    }
-
-    /* Modal */
+    /* Modal & Toast */
     .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(15, 23, 42, 0.6);
-      backdrop-filter: blur(4px);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 2000;
-      padding: 20px;
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px);
+      display: none; align-items: center; justify-content: center; z-index: 2000; padding: 20px;
     }
 
-    .modal-overlay.show {
-      display: flex;
-    }
+    .modal-overlay.show { display: flex; }
 
     .modal-card {
-      background: white;
-      border-radius: 16px;
-      max-width: 500px;
-      width: 100%;
-      padding: 24px;
-      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
+      background: white; border-radius: 16px; max-width: 540px; width: 100%;
+      padding: 24px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); display: flex; flex-direction: column; gap: 16px;
     }
 
-    .modal-card h3 {
-      color: var(--primary);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+    .modal-card h3 { color: var(--primary); display: flex; align-items: center; gap: 8px; }
 
     .modal-card textarea {
-      width: 100%;
-      height: 220px;
-      padding: 12px;
-      border-radius: 8px;
-      border: 2px solid var(--border);
-      font-family: monospace;
-      font-size: 0.9rem;
-      resize: vertical;
-      outline: none;
+      width: 100%; height: 260px; padding: 12px; border-radius: 8px;
+      border: 2px solid var(--border); font-family: monospace; font-size: 0.88rem; resize: vertical; outline: none;
     }
 
-    .modal-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 12px;
-    }
+    .modal-actions { display: flex; justify-content: flex-end; gap: 12px; }
 
-    .btn-close {
-      background: #e2e8f0;
-      color: #0f172a;
-      border: none;
-      padding: 10px 18px;
-      border-radius: 8px;
-      font-weight: 600;
-      cursor: pointer;
-    }
+    .btn-close { background: #e2e8f0; color: #0f172a; border: none; padding: 10px 18px; border-radius: 8px; font-weight: 600; cursor: pointer; }
 
-    /* Toast */
     .toast {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      background: #0f172a;
-      color: white;
-      padding: 14px 24px;
-      border-radius: 12px;
-      box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3);
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      z-index: 1000;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.3s;
-      pointer-events: none;
+      position: fixed; bottom: 24px; right: 24px; background: #0f172a; color: white;
+      padding: 14px 24px; border-radius: 12px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3);
+      display: flex; align-items: center; gap: 12px; z-index: 1000; opacity: 0; transform: translateY(20px); transition: all 0.3s; pointer-events: none;
     }
 
-    .toast.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .toast.show { opacity: 1; transform: translateY(0); }
 
     /* Rules Banner */
-    .rules-banner {
-      background: #eff6ff;
-      border: 1px solid #bfdbfe;
-      border-radius: 12px;
-      padding: 16px;
-      margin-bottom: 20px;
-      color: #1e3a8a;
-      font-size: 0.9rem;
-    }
-
-    .rules-banner ul {
-      margin-top: 8px;
-      margin-left: 20px;
-    }
+    .rules-banner { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 12px; padding: 16px; margin-bottom: 20px; color: #1e3a8a; font-size: 0.9rem; }
+    .rules-banner ul { margin-top: 8px; margin-left: 20px; }
 
     @media print {
       body { padding: 0; background: white; }
-      header, .tabs, .controls-bar, .legend, .rules-banner, .btn-whatsapp, .btn-print, .quick-dates, .modal-overlay { display: none !important; }
+      header, .tabs, .controls-bar, .legend, .rules-banner, .btn-whatsapp, .btn-print, .quick-dates, .modal-overlay, .cleaning-toggle-box { display: none !important; }
       .daily-container { display: block; }
       .date-picker-card { display: none; }
       .daily-card { box-shadow: none; border: none; }
-      .table-container { box-shadow: none; overflow: visible; }
+      .ops-table { font-size: 0.8rem; }
+      .att-select { border: none; background: transparent; padding: 0; }
+      .time-inputs input { border: none; width: auto; }
     }
   </style>
 </head>
@@ -687,8 +751,8 @@
 
   <header>
     <div>
-      <h1>📋 Restaurant Staff Roster System</h1>
-      <p>Automated Daily & Monthly Shift Management (Joining Date Aware)</p>
+      <h1>📋 Restaurant Operations Command Center</h1>
+      <p>Roster, Attendance, Food Stations (Chinese/Tandoor/Ramen/Sushi) & Deep Cleaning</p>
     </div>
     <div class="controls-bar">
       <label for="monthSelect">Month:</label>
@@ -704,45 +768,37 @@
   </header>
 
   <div class="rules-banner">
-    <strong>🛡️ Active Smart Scheduling Rules & Joining Dates:</strong>
+    <strong>🛡️ Active Kitchen Command Rules & Stations:</strong>
     <ul>
-      <li><strong>Joining Dates:</strong> Dilip (12 June), Dev (17 June), Amit (25 June). Days before joining show as <strong>NJ (Not Joined)</strong>.</li>
-      <li><strong>Prorated Quota:</strong> Staff active 20+ days get <strong>2 leaves</strong>. Staff active 10–19 days get <strong>1 leave</strong>. <10 days get 0 leaves.</li>
-      <li><strong>Kitchen Continuity:</strong> Chef 1 (Jannat) & Chef 2 (Dilip) are <em>never</em> assigned leave on the same day.</li>
-      <li><strong>Scullery Continuity:</strong> Mori Wala 1 (Dev) & Mori Wala 2 (Amit) are <em>never</em> assigned leave on the same day.</li>
-      <li><strong>Peak Protection:</strong> Leaves are preferentially distributed across Mon/Tue/Wed/Thu to keep full staff on weekend peak days (Fri/Sat/Sun).</li>
-      <li><strong>Interactive:</strong> Click any working status cell on the grid to cycle: <strong>Work (W) ➔ Leave (L) ➔ Morning (M) ➔ Evening (E) ➔ Half-Day (H)</strong>.</li>
+      <li><strong>Food Stations:</strong> Jannat (🥡 Chinese Wok), Dilip (🔥 Tandoor), Dev (🍣 Sushi & Ramen Prep), Amit (🍜 Ramen Assembly), Nafeez (🍽️ Waiter/POS).</li>
+      <li><strong>Joining Dates:</strong> Dilip (12 June), Dev (17 June), Amit (25 June). Days before joining show as <strong>NJ</strong>.</li>
+      <li><strong>Deep Cleaning Day:</strong> Toggle the switch on the Daily View to reveal station degreasing & sanitization checklists.</li>
+      <li><strong>Attendance Tracker:</strong> Mark live arrival status (Present, Late, Absent) and sign-in/out hours directly on the Daily Log.</li>
     </ul>
   </div>
 
   <!-- Tabs Navigation -->
   <div class="tabs">
     <button class="tab-btn active" onclick="switchTab('monthly')">📅 Monthly Roster Board</button>
-    <button class="tab-btn" onclick="switchTab('daily')">📆 Daily Work Roster & WhatsApp</button>
+    <button class="tab-btn" onclick="switchTab('daily')">📝 Daily Attendance, Stations & Cleaning Log</button>
   </div>
 
   <!-- MONTHLY TAB -->
   <div id="monthlyTab" class="tab-content active">
     
-    <!-- Summary Cards -->
     <div class="summary-grid" id="summaryGrid"></div>
 
-    <!-- Monthly Roster Grid -->
     <div class="table-container">
       <table id="rosterTable">
         <thead>
           <tr id="tableHeaderRow">
             <th class="sticky-col">Staff Member</th>
-            <!-- Days injected by JS -->
           </tr>
         </thead>
-        <tbody id="tableBody">
-          <!-- Rows injected by JS -->
-        </tbody>
+        <tbody id="tableBody"></tbody>
       </table>
     </div>
 
-    <!-- Legend -->
     <div class="legend">
       <span style="font-weight:700; color:var(--text-muted);">Legend:</span>
       <div class="legend-item"><div class="legend-box st-W">W</div> Present (Full Day)</div>
@@ -759,53 +815,76 @@
   <div id="dailyTab" class="tab-content">
     <div class="daily-container">
       
-      <!-- Date Picker Left Sidebar -->
+      <!-- Left Date Picker -->
       <div class="date-picker-card">
-        <h3>🔍 Select Daily View</h3>
+        <h3>🔍 Select Daily Operations</h3>
         <input type="date" id="dailyDateInput" onchange="renderDailyView()">
         
-        <h4 style="font-size:0.85rem; color:var(--text-muted); margin-bottom:8px; text-transform:uppercase;">Quick Select:</h4>
-        <div class="quick-dates" id="quickDatesContainer">
-          <!-- Injected by JS -->
-        </div>
+        <h4 style="font-size:0.85rem; color:var(--text-muted); margin-bottom:8px; text-transform:uppercase;">Quick Jump:</h4>
+        <div class="quick-dates" id="quickDatesContainer"></div>
       </div>
 
-      <!-- Daily Roster Card -->
+      <!-- Daily Log Card -->
       <div class="daily-card">
         <div class="daily-card-header">
           <div>
-            <h2 id="dailyTitle">Daily Roster</h2>
-            <p id="dailySubtitle" style="color:#bfdbfe; font-size:0.95rem;">Loading shift details...</p>
+            <h2 id="dailyTitle">Daily Operations Log</h2>
+            <p id="dailySubtitle" style="color:#bfdbfe; font-size:0.95rem;">Loading stations & attendance...</p>
           </div>
-          <span id="dailyStatusBadge">Operational</span>
+          
+          <div class="cleaning-toggle-box">
+            <label for="cleanSwitch">🧹 Deep Cleaning Day</label>
+            <label class="switch">
+              <input type="checkbox" id="cleanSwitch" onchange="toggleCleaningDay()">
+              <span class="slider"></span>
+            </label>
+          </div>
         </div>
 
-        <div class="daily-sections" id="dailySections">
-          <!-- Kitchen Section -->
-          <div class="section-box">
-            <h4>👨‍🍳 Kitchen Staff (Chefs & Mori)</h4>
-            <div id="dailyKitchenList"></div>
+        <div class="daily-content">
+          
+          <!-- Section 1: Stations & Attendance -->
+          <div>
+            <div class="section-title">👨‍🍳 Station Schedule & Live Attendance</div>
+            <table class="ops-table">
+              <thead>
+                <tr>
+                  <th>Staff & Station</th>
+                  <th>Roster Shift</th>
+                  <th>Attendance Status</th>
+                  <th>Sign-In / Sign-Out</th>
+                </tr>
+              </thead>
+              <tbody id="dailyOpsBody"></tbody>
+            </table>
           </div>
 
-          <!-- Service Section -->
-          <div class="section-box">
-            <h4>🍽️ Service Staff (Waiter)</h4>
-            <div id="dailyServiceList"></div>
+          <!-- Section 2: Deep Cleaning Checklist -->
+          <div class="cleaning-checklist-box" id="cleaningBox">
+            <div class="section-title" style="color:#15803d; border-color:#86efac;">
+              🧹 Kitchen Deep Cleaning Station Protocols
+            </div>
+            <p style="font-size:0.85rem; color:#166534;">Check off each deep degreasing and sanitization task upon completion:</p>
+            
+            <div class="clean-task-grid" id="cleanTaskGrid">
+              <!-- Injected by JS -->
+            </div>
           </div>
 
-          <!-- On Leave Section -->
-          <div class="section-box" style="background:#fff1f2; border-color:#fecdd3;">
-            <h4 style="color:#e11d48; border-color:#fecdd3;">🏖️ On Leave Today</h4>
-            <div id="dailyLeaveList"></div>
+          <!-- Section 3: Daily Manager Notes -->
+          <div>
+            <div class="section-title">📝 Daily Handover / Kitchen Stock Notes</div>
+            <textarea class="notes-area" id="dailyNotesInput" placeholder="Enter stock shortages, order reminders, or equipment repairs (e.g. Need more Nori sheets & Tandoori masala)..." oninput="saveDailyState()"></textarea>
           </div>
+
         </div>
 
         <div class="daily-footer">
           <button class="btn-whatsapp" onclick="showWhatsAppModal()">
-            💬 Copy Daily Roster for WhatsApp
+            💬 Copy Daily Operations Report for WhatsApp
           </button>
           <button class="btn-print" onclick="window.print()">
-            🖨️ Print Daily Sheet
+            🖨️ Print Daily Log Sheet
           </button>
         </div>
       </div>
@@ -816,8 +895,8 @@
   <!-- WhatsApp Modal -->
   <div class="modal-overlay" id="waModal">
     <div class="modal-card">
-      <h3>💬 Share Daily WhatsApp Roster</h3>
-      <p style="font-size:0.85rem; color:var(--text-muted);">Copy the formatted schedule below and paste it directly into your staff group chat:</p>
+      <h3>💬 Share Daily WhatsApp Operations Report</h3>
+      <p style="font-size:0.85rem; color:var(--text-muted);">Copy the comprehensive report below and paste it directly into your staff group chat:</p>
       <textarea id="waTextArea" readonly></textarea>
       <div class="modal-actions">
         <button class="btn-close" onclick="closeModal()">Close</button>
@@ -832,13 +911,21 @@
   </div>
 
   <script>
-    // Staff Definition with Joining Dates
+    // Staff & Station Definition
     const staffList = [
-      { id: 1, name: "Jannat", role: "Chef 1", dept: "Kitchen", icon: "👨‍🍳", joinDate: "2026-01-01", joinText: "Existing Staff" },
-      { id: 2, name: "Dilip", role: "Chef 2", dept: "Kitchen", icon: "👨‍🍳", joinDate: "2026-06-12", joinText: "Joined: 12 June" },
-      { id: 3, name: "Dev", role: "Mori Wala 1", dept: "Kitchen", icon: "🫧", joinDate: "2026-06-17", joinText: "Joined: 17 June" },
-      { id: 4, name: "Amit", role: "Mori Wala 2", dept: "Kitchen", icon: "🫧", joinDate: "2026-06-25", joinText: "Joined: 25 June" },
-      { id: 5, name: "Nafeez", role: "Waiter", dept: "Service", icon: "🍽️", joinDate: "2026-01-01", joinText: "Existing Staff" }
+      { id: 1, name: "Jannat", role: "Chef 1", dept: "Kitchen", station: "🥡 Chinese (Wok & Pans)", icon: "👨‍🍳", joinDate: "2026-01-01", joinText: "Existing Staff", hours: "11:00 AM – 11:00 PM" },
+      { id: 2, name: "Dilip", role: "Chef 2", dept: "Kitchen", station: "🔥 Tandoor & Clay Oven", icon: "👨‍🍳", joinDate: "2026-06-12", joinText: "Joined: 12 June", hours: "11:00 AM – 11:00 PM" },
+      { id: 3, name: "Dev", role: "Mori Wala 1", dept: "Kitchen", station: "🍣 Sushi Bar & Ramen Prep", icon: "🫧", joinDate: "2026-06-17", joinText: "Joined: 17 June", hours: "11:00 AM – 11:00 PM" },
+      { id: 4, name: "Amit", role: "Mori Wala 2", dept: "Kitchen", station: "🍜 Ramen Assembly & Scullery", icon: "🫧", joinDate: "2026-06-25", joinText: "Joined: 25 June", hours: "11:00 AM – 11:00 PM" },
+      { id: 5, name: "Nafeez", role: "Waiter", dept: "Service", station: "🍽️ FOH Dining & Packing", icon: "🍽️", joinDate: "2026-01-01", joinText: "Existing Staff", hours: "11:00 AM – 11:00 PM" }
+    ];
+
+    const cleaningTasks = [
+      { id: "c1", station: "🥡 Chinese Station (Jannat)", task: "Degrease wok range hoods, boil high-pressure burners, scrub grease traps." },
+      { id: "c2", station: "🔥 Tandoor Station (Dilip)", task: "Scrape burnt marinade from iron skewers, remove bottom oven ash, polish stainless lid." },
+      { id: "c3", station: "🍣 Sushi & Ramen Prep (Dev)", task: "Sanitize raw fish fridge ~2°C, bleach bamboo mats, descale noodle boiling strainers." },
+      { id: "c4", station: "🫧 Scullery & Mori Drains (Amit)", task: "Scrub floor drains with caustic soda, empty fat grease traps, sanitize scrubbing pads." },
+      { id: "c5", station: "🍽️ Dining Area & POS (Nafeez)", task: "Deep scrub dining tables, wipe soy/chili condiment jars, polish glass entrance doors." }
     ];
 
     const months = [
@@ -846,123 +933,89 @@
       "July", "August", "September", "October", "November", "December"
     ];
 
-    const statusCycle = ["W", "L", "M", "E", "H"];
     const statusLabels = {
-      "W": "Full Day (Present)",
-      "L": "Leave (Off)",
-      "M": "Morning Shift",
-      "E": "Evening Shift",
-      "H": "Half Day",
-      "NJ": "Not Joined Yet"
+      "W": "Full Day (Present)", "L": "Leave (Off)", "M": "Morning Shift", "E": "Evening Shift", "H": "Half Day", "NJ": "Not Joined"
     };
 
-    // State: rosterData[year][month][staffId][day]
     let rosterData = {};
+    // dailyState[dateStr] = { attendance: { id: { status: 'Present', inTime: '11:00 AM', outTime: '11:00 PM' } }, isCleaning: false, checkedTasks: [], notes: '' }
+    let dailyState = {};
 
     let currentYear = 2026;
-    let currentMonth = 5; // June (0-indexed) where Dilip, Dev, Amit join
+    let currentMonth = 5; // June 2026
 
     function init() {
-      const now = new Date(2026, 5, 25); // Default to June 2026
+      const now = new Date(2026, 5, 25);
       currentYear = now.getFullYear();
       currentMonth = now.getMonth();
 
-      // Populate Controls
+      // Load saved state from memory
+      try {
+        const saved = localStorage.getItem("restaurant_daily_state");
+        if (saved) dailyState = JSON.parse(saved);
+      } catch (e) {}
+
       const mSelect = document.getElementById("monthSelect");
       months.forEach((m, idx) => {
         const opt = document.createElement("option");
-        opt.value = idx;
-        opt.textContent = m;
+        opt.value = idx; opt.textContent = m;
         if (idx === currentMonth) opt.selected = true;
         mSelect.appendChild(opt);
       });
-      mSelect.addEventListener("change", (e) => {
-        currentMonth = parseInt(e.target.value);
-        loadOrGenerateMonth();
-      });
+      mSelect.addEventListener("change", (e) => { currentMonth = parseInt(e.target.value); loadOrGenerateMonth(); });
 
       const ySelect = document.getElementById("yearSelect");
       for (let y = 2025; y <= 2028; y++) {
         const opt = document.createElement("option");
-        opt.value = y;
-        opt.textContent = y;
+        opt.value = y; opt.textContent = y;
         if (y === currentYear) opt.selected = true;
         ySelect.appendChild(opt);
       }
-      ySelect.addEventListener("change", (e) => {
-        currentYear = parseInt(e.target.value);
-        loadOrGenerateMonth();
-      });
+      ySelect.addEventListener("change", (e) => { currentYear = parseInt(e.target.value); loadOrGenerateMonth(); });
 
       loadOrGenerateMonth();
     }
 
-    function getDaysInMonth(year, month) {
-      return new Date(year, month + 1, 0).getDate();
-    }
+    function getDaysInMonth(year, month) { return new Date(year, month + 1, 0).getDate(); }
 
     function getTargetQuota(staff, year, monthIdx) {
       const numDays = getDaysInMonth(year, monthIdx);
       const [jy, jm, jd] = staff.joinDate.split("-").map(Number);
       const joinDt = new Date(jy, jm - 1, jd);
-
       let activeCount = 0;
       for (let d = 1; d <= numDays; d++) {
-        const cellDt = new Date(year, monthIdx, d);
-        if (cellDt >= joinDt) activeCount++;
+        if (new Date(year, monthIdx, d) >= joinDt) activeCount++;
       }
-
-      if (activeCount >= 20) return 2;
-      if (activeCount >= 10) return 1;
-      return 0;
+      return activeCount >= 20 ? 2 : (activeCount >= 10 ? 1 : 0);
     }
 
     function loadOrGenerateMonth() {
       if (!rosterData[currentYear]) rosterData[currentYear] = {};
-      if (!rosterData[currentYear][currentMonth]) {
-        autoGenerateSchedule(true);
-      } else {
-        renderAll();
-      }
+      if (!rosterData[currentYear][currentMonth]) autoGenerateSchedule(true);
+      else renderAll();
     }
 
-    // Smart Auto Generator
     function autoGenerateSchedule(silent = false) {
       const numDays = getDaysInMonth(currentYear, currentMonth);
       if (!rosterData[currentYear]) rosterData[currentYear] = {};
       rosterData[currentYear][currentMonth] = {};
 
-      // Initialize days aware of joinDate
       staffList.forEach(s => {
         rosterData[currentYear][currentMonth][s.id] = {};
         const [jy, jm, jd] = s.joinDate.split("-").map(Number);
         const joinDt = new Date(jy, jm - 1, jd);
-
         for (let d = 1; d <= numDays; d++) {
-          const cellDt = new Date(currentYear, currentMonth, d);
-          if (cellDt < joinDt) {
-            rosterData[currentYear][currentMonth][s.id][d] = "NJ";
-          } else {
-            rosterData[currentYear][currentMonth][s.id][d] = "W";
-          }
+          rosterData[currentYear][currentMonth][s.id][d] = (new Date(currentYear, currentMonth, d) < joinDt) ? "NJ" : "W";
         }
       });
 
-      // Preferred weekdays map (1=Mon, 2=Tue, 3=Wed, 4=Thu)
-      // Jannat -> Mon (1), Dilip -> Tue (2), Dev -> Wed (3), Amit -> Thu (4), Nafeez -> Tue (2)
-      assignSmartLeaves(1, 1);
-      assignSmartLeaves(2, 2);
-      assignSmartLeaves(3, 3);
-      assignSmartLeaves(4, 4);
-      assignSmartLeaves(5, 2, [2]); // Nafeez offset if conflicting
+      assignSmartLeaves(1, 1); assignSmartLeaves(2, 2); assignSmartLeaves(3, 3); assignSmartLeaves(4, 4); assignSmartLeaves(5, 2);
 
       renderAll();
-      if (!silent) {
-        showToast(`Roster Generated for ${months[currentMonth]} ${currentYear}!`);
-      }
+      if (!silent) showToast(`Roster Generated for ${months[currentMonth]} ${currentYear}!`);
     }
 
-    function assignSmartLeaves(staffId, preferredDow, avoidStaffIds = []) {
+    function assignSmartLeaves(staffId, prefDow) {
       const numDays = getDaysInMonth(currentYear, currentMonth);
       const s = staffList.find(st => st.id === staffId);
       const targetQuota = getTargetQuota(s, currentYear, currentMonth);
@@ -970,455 +1023,360 @@
 
       const [jy, jm, jd] = s.joinDate.split("-").map(Number);
       const joinDt = new Date(jy, jm - 1, jd);
-
-      let candidates = [];
+      let cands = [];
       for (let d = 1; d <= numDays; d++) {
         const dt = new Date(currentYear, currentMonth, d);
-        // Must be on or after join date
-        if (dt < joinDt) continue;
-        // Don't assign leave on exact joining day
-        if (currentYear === jy && currentMonth === (jm - 1) && d === jd) continue;
-
-        if (dt.getDay() === preferredDow) {
-          // Check role conflict
+        if (dt < joinDt || (currentYear === jy && currentMonth === (jm - 1) && d === jd)) continue;
+        if (dt.getDay() === prefDow) {
           let conflict = false;
           if (staffId === 1 && rosterData[currentYear][currentMonth][2][d] === "L") conflict = true;
           if (staffId === 2 && rosterData[currentYear][currentMonth][1][d] === "L") conflict = true;
           if (staffId === 3 && rosterData[currentYear][currentMonth][4][d] === "L") conflict = true;
           if (staffId === 4 && rosterData[currentYear][currentMonth][3][d] === "L") conflict = true;
-
-          if (!conflict) candidates.push(d);
+          if (!conflict) cands.push(d);
         }
       }
-
-      // Fallback if not enough weekdays
-      if (candidates.length < targetQuota) {
+      if (cands.length < targetQuota) {
         for (let d = 1; d <= numDays; d++) {
           const dt = new Date(currentYear, currentMonth, d);
           if (dt < joinDt || (currentYear === jy && currentMonth === (jm - 1) && d === jd)) continue;
-          const dow = dt.getDay();
-          if (dow >= 1 && dow <= 4 && !candidates.includes(d)) {
-            let conflict = false;
-            if (staffId === 1 && rosterData[currentYear][currentMonth][2][d] === "L") conflict = true;
-            if (staffId === 2 && rosterData[currentYear][currentMonth][1][d] === "L") conflict = true;
-            if (staffId === 3 && rosterData[currentYear][currentMonth][4][d] === "L") conflict = true;
-            if (staffId === 4 && rosterData[currentYear][currentMonth][3][d] === "L") conflict = true;
-            if (!conflict) candidates.push(d);
-          }
+          if (dt.getDay() >= 1 && dt.getDay() <= 4 && !cands.includes(d)) cands.push(d);
         }
       }
-
-      candidates.sort((a, b) => a - b);
-
-      if (targetQuota === 2 && candidates.length >= 2) {
-        rosterData[currentYear][currentMonth][staffId][candidates[0]] = "L";
-        rosterData[currentYear][currentMonth][staffId][candidates[candidates.length > 2 ? 2 : 1]] = "L";
-      } else if (targetQuota >= 1 && candidates.length >= 1) {
-        rosterData[currentYear][currentMonth][staffId][candidates[Math.floor(candidates.length / 2)]] = "L";
+      cands.sort((a, b) => a - b);
+      if (targetQuota === 2 && cands.length >= 2) {
+        rosterData[currentYear][currentMonth][staffId][cands[0]] = "L";
+        rosterData[currentYear][currentMonth][staffId][cands[cands.length > 2 ? 2 : 1]] = "L";
+      } else if (targetQuota >= 1 && cands.length >= 1) {
+        rosterData[currentYear][currentMonth][staffId][cands[Math.floor(cands.length / 2)]] = "L";
       }
     }
 
-    function renderAll() {
-      renderSummary();
-      renderTable();
-      initDailyDatePicker();
-      renderDailyView();
-    }
+    function renderAll() { renderSummary(); renderTable(); initDailyDatePicker(); renderDailyView(); }
 
     function renderSummary() {
-      const container = document.getElementById("summaryGrid");
-      container.innerHTML = "";
+      const container = document.getElementById("summaryGrid"); container.innerHTML = "";
       const numDays = getDaysInMonth(currentYear, currentMonth);
-      const monthData = rosterData[currentYear][currentMonth];
+      const mData = rosterData[currentYear][currentMonth];
 
       staffList.forEach(s => {
-        let leaveCount = 0;
-        for (let d = 1; d <= numDays; d++) {
-          if (monthData[s.id][d] === "L") leaveCount++;
-        }
-
+        let leaveCount = sumLeaves(s.id, numDays, mData);
         const target = getTargetQuota(s, currentYear, currentMonth);
+        let badgeClass = leaveCount === target ? "leaves-ok" : (leaveCount < target ? "leaves-warn" : "leaves-err");
 
-        let badgeClass = "leaves-ok";
-        let badgeText = `${leaveCount} / ${target} Leaves Assigned`;
-        if (leaveCount < target) {
-          badgeClass = "leaves-warn";
-          badgeText = `⚠️ ${leaveCount} / ${target} Leaves (Under quota)`;
-        } else if (leaveCount > target) {
-          badgeClass = "leaves-err";
-          badgeText = `🚨 ${leaveCount} / ${target} Leaves (Over quota!)`;
-        }
-
-        const card = document.createElement("div");
-        card.className = "staff-stat-card";
-        card.innerHTML = `
-          <div>
-            <div class="staff-stat-header">
-              <span class="staff-name">${s.icon} ${s.name}</span>
-              <span class="staff-role">${s.role}</span>
+        container.innerHTML += `
+          <div class="staff-stat-card">
+            <div>
+              <div class="staff-stat-header">
+                <span class="staff-name">${s.icon} ${s.name}</span>
+                <span class="staff-role">${s.role}</span>
+              </div>
+              <span class="station-badge">${s.station}</span>
+              <div class="staff-join-meta">📅 ${s.joinText}</div>
             </div>
-            <div class="staff-join-meta">📅 ${s.joinText}</div>
-          </div>
-          <div>
-            <div class="leave-badge ${badgeClass}">${badgeText}</div>
+            <div class="leave-badge ${badgeClass}">${leaveCount} / ${target} Leaves Assigned</div>
           </div>
         `;
-        container.appendChild(card);
       });
+    }
+
+    function sumLeaves(id, numDays, mData) {
+      let cnt = 0;
+      for (let d = 1; d <= numDays; d++) if (mData[id][d] === "L") cnt++;
+      return cnt;
     }
 
     function renderTable() {
       const numDays = getDaysInMonth(currentYear, currentMonth);
       const headRow = document.getElementById("tableHeaderRow");
       const tbody = document.getElementById("tableBody");
-
-      while (headRow.children.length > 1) {
-        headRow.removeChild(headRow.lastChild);
-      }
+      while (headRow.children.length > 1) headRow.removeChild(headRow.lastChild);
       tbody.innerHTML = "";
-
       const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
       for (let d = 1; d <= numDays; d++) {
-        const dt = new Date(currentYear, currentMonth, d);
-        const dow = dt.getDay();
-        const isWeekend = (dow === 0 || dow === 5 || dow === 6);
-
+        const dow = new Date(currentYear, currentMonth, d).getDay();
         const th = document.createElement("th");
-        if (isWeekend) th.className = "weekend";
-        th.innerHTML = `
-          <div class="day-header">
-            <div class="day-num">${d}</div>
-            <div class="day-name">${dayNames[dow]}</div>
-          </div>
-        `;
+        if (dow === 0 || dow === 5 || dow === 6) th.className = "weekend";
+        th.innerHTML = `<div class="day-header"><div class="day-num">${d}</div><div class="day-name">${dayNames[dow]}</div></div>`;
         headRow.appendChild(th);
       }
 
-      const monthData = rosterData[currentYear][currentMonth];
-
+      const mData = rosterData[currentYear][currentMonth];
       staffList.forEach(s => {
         const tr = document.createElement("tr");
-
-        const tdName = document.createElement("td");
-        tdName.className = "sticky-col";
-        tdName.innerHTML = `
-          <div style="font-weight:700; color:var(--text-main);">${s.name}</div>
-          <div style="display:flex; justify-content:space-between; align-items:center;">
-            <span style="font-size:0.75rem; color:var(--text-muted);">${s.role}</span>
-            <span style="font-size:0.7rem; background:#f1f5f9; padding:1px 6px; border-radius:4px; color:#64748b;">${s.joinText}</span>
-          </div>
+        tr.innerHTML = `
+          <td class="sticky-col">
+            <div style="font-weight:700; color:var(--text-main);">${s.name}</div>
+            <span style="font-size:0.75rem; color:var(--text-muted);">${s.station}</span>
+          </td>
         `;
-        tr.appendChild(tdName);
-
         for (let d = 1; d <= numDays; d++) {
-          const dt = new Date(currentYear, currentMonth, d);
-          const dow = dt.getDay();
-          const isWeekend = (dow === 0 || dow === 5 || dow === 6);
-
+          const dow = new Date(currentYear, currentMonth, d).getDay();
           const td = document.createElement("td");
-          if (isWeekend) td.className = "weekend";
-
-          const st = monthData[s.id][d] || "W";
-
+          if (dow === 0 || dow === 5 || dow === 6) td.className = "weekend";
+          const st = mData[s.id][d] || "W";
           const cellDiv = document.createElement("div");
-          cellDiv.className = `status-cell st-${st}`;
-          cellDiv.textContent = st;
-          cellDiv.title = `${s.name} - Day ${d}: ${statusLabels[st]}`;
-
-          if (st !== "NJ") {
-            cellDiv.onclick = () => cycleStatus(s.id, d);
-          } else {
-            cellDiv.onclick = () => showToast(`ℹ️ ${s.name} joined on ${s.joinDate}. Not employed before this date.`);
-          }
-
-          td.appendChild(cellDiv);
-          tr.appendChild(td);
+          cellDiv.className = `status-cell st-${st}`; cellDiv.textContent = st;
+          if (st !== "NJ") cellDiv.onclick = () => { cycleStatus(s.id, d); };
+          td.appendChild(cellDiv); tr.appendChild(td);
         }
-
         tbody.appendChild(tr);
       });
     }
 
-    function cycleStatus(staffId, day) {
-      const current = rosterData[currentYear][currentMonth][staffId][day] || "W";
+    function cycleStatus(id, day) {
+      const current = rosterData[currentYear][currentMonth][id][day] || "W";
       if (current === "NJ") return;
-
-      const validCycle = ["W", "L", "M", "E", "H"];
-      const nextIdx = (validCycle.indexOf(current) + 1) % validCycle.length;
-      const nextStatus = validCycle[nextIdx];
-
-      rosterData[currentYear][currentMonth][staffId][day] = nextStatus;
-      
-      renderSummary();
-      renderTable();
-      renderDailyView();
+      const cycle = ["W", "L", "M", "E", "H"];
+      rosterData[currentYear][currentMonth][id][day] = cycle[(cycle.indexOf(current) + 1) % cycle.length];
+      renderSummary(); renderTable(); renderDailyView();
     }
 
     function switchTab(tabId) {
-      document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
-      document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
-
-      if (tabId === "monthly") {
-        document.querySelectorAll(".tab-btn")[0].classList.add("active");
-        document.getElementById("monthlyTab").classList.add("active");
-      } else {
-        document.querySelectorAll(".tab-btn")[1].classList.add("active");
-        document.getElementById("dailyTab").classList.add("active");
-      }
+      document.querySelectorAll(".tab-btn").forEach((b, i) => b.classList.toggle("active", (tabId === "monthly" ? i===0 : i===1)));
+      document.getElementById("monthlyTab").classList.toggle("active", tabId === "monthly");
+      document.getElementById("dailyTab").classList.toggle("active", tabId !== "monthly");
     }
 
     function initDailyDatePicker() {
       const dateInput = document.getElementById("dailyDateInput");
       const mm = String(currentMonth + 1).padStart(2, '0');
-      const dd = "25"; // Pick 25th where all staff are joined
-      dateInput.value = `${currentYear}-${mm}-${dd}`;
+      dateInput.value = `${currentYear}-${mm}-25`;
 
-      const container = document.getElementById("quickDatesContainer");
-      container.innerHTML = "";
-
+      const container = document.getElementById("quickDatesContainer"); container.innerHTML = "";
       const numDays = getDaysInMonth(currentYear, currentMonth);
       const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
       [1, 12, 17, 25, numDays].forEach(d => {
         if (d > numDays) return;
-        const dt = new Date(currentYear, currentMonth, d);
-        const dow = dt.getDay();
+        const dow = new Date(currentYear, currentMonth, d).getDay();
         const dateStr = `${currentYear}-${mm}-${String(d).padStart(2, '0')}`;
-
-        let note = "";
-        if (d === 12) note = " (Dilip Joins)";
-        if (d === 17) note = " (Dev Joins)";
-        if (d === 25) note = " (Amit Joins)";
-
-        const btn = document.createElement("button");
-        btn.className = "quick-date-btn";
-        btn.innerHTML = `<span>${months[currentMonth]} ${d}${note}</span> <span style="font-size:0.8rem; color:var(--text-muted);">${dayNames[dow]}</span>`;
-        btn.onclick = () => {
-          dateInput.value = dateStr;
-          renderDailyView();
-        };
-        container.appendChild(btn);
+        let note = d === 12 ? " (Dilip Joins)" : (d === 17 ? " (Dev Joins)" : (d === 25 ? " (Amit Joins)" : ""));
+        
+        container.innerHTML += `
+          <button class="quick-date-btn" onclick="document.getElementById('dailyDateInput').value='${dateStr}'; renderDailyView();">
+            <span>${months[currentMonth]} ${d}${note}</span><span style="font-size:0.8rem; color:var(--text-muted);">${dayNames[dow]}</span>
+          </button>
+        `;
       });
     }
 
     function renderDailyView() {
       const dateVal = document.getElementById("dailyDateInput").value;
       if (!dateVal) return;
-
       const [y, m, d] = dateVal.split("-").map(Number);
-      const dayNum = d;
-      const monthIdx = m - 1;
-
-      const dt = new Date(y, monthIdx, dayNum);
+      const dt = new Date(y, m - 1, d);
       const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-      const dowName = dayNames[dt.getDay()];
+      document.getElementById("dailyTitle").textContent = `${dayNames[dt.getDay()]}, ${d} ${months[m-1]} ${y}`;
+      document.getElementById("dailySubtitle").textContent = `Station Operations & Attendance Command`;
 
-      document.getElementById("dailyTitle").textContent = `${dowName}, ${months[monthIdx]} ${dayNum}, ${y}`;
+      if (!rosterData[y] || !rosterData[y][m-1]) { autoGenerateSchedule(true); }
+      const mData = rosterData[y][m-1];
 
-      if (!rosterData[y] || !rosterData[y][monthIdx]) {
-        document.getElementById("dailySubtitle").textContent = "No roster generated for this month.";
-        return;
+      // Initialize state for this day if missing
+      if (!dailyState[dateVal]) {
+        let att = {};
+        staffList.forEach(s => {
+          const st = mData[s.id][d] || "W";
+          att[s.id] = {
+            status: st === "L" ? "Leave" : (st === "NJ" ? "Not Joined" : "Present"),
+            inTime: st === "M" ? "11:00 AM" : (st === "E" ? "06:00 PM" : "11:00 AM"),
+            outTime: st === "M" ? "04:00 PM" : "11:00 PM"
+          };
+        });
+        dailyState[dateVal] = { attendance: att, isCleaning: dt.getDay() === 2, checkedTasks: [], notes: "" };
       }
 
-      document.getElementById("dailySubtitle").textContent = `Daily Shift & Leave Allocations`;
+      const stObj = dailyState[dateVal];
+      document.getElementById("cleanSwitch").checked = stObj.isCleaning;
+      document.getElementById("cleaningBox").classList.toggle("show", stObj.isCleaning);
+      document.getElementById("dailyNotesInput").value = stObj.notes || "";
 
-      const monthData = rosterData[y][monthIdx];
-
-      const kitchenContainer = document.getElementById("dailyKitchenList");
-      const serviceContainer = document.getElementById("dailyServiceList");
-      const leaveContainer = document.getElementById("dailyLeaveList");
-
-      kitchenContainer.innerHTML = "";
-      serviceContainer.innerHTML = "";
-      leaveContainer.innerHTML = "";
-
-      let leavesCount = 0;
-      let notJoinedList = [];
-
+      // Render Stations & Attendance
+      const tbody = document.getElementById("dailyOpsBody"); tbody.innerHTML = "";
       staffList.forEach(s => {
-        const st = monthData[s.id][dayNum] || "W";
+        const rosterSt = mData[s.id][d] || "W";
+        if (rosterSt === "NJ") return; // Omit pre-employment
 
-        if (st === "NJ") {
-          notJoinedList.push(`${s.name} (joins ${s.joinDate})`);
-          return;
-        }
+        const curAtt = stObj.attendance[s.id] || { status: "Present", inTime: "11:00 AM", outTime: "11:00 PM" };
+        const shiftText = rosterSt === "W" ? `Full Day (${s.hours})` : statusLabels[rosterSt];
 
-        if (st === "L") {
-          leavesCount++;
-          leaveContainer.innerHTML += `
-            <div class="staff-row" style="border-left: 4px solid #f43f5e;">
-              <div class="info">
-                <div class="name">${s.icon} ${s.name}</div>
-                <div class="role">${s.role}</div>
+        tbody.innerHTML += `
+          <tr>
+            <td>
+              <div class="staff-station-cell">
+                <span class="s-name">${s.icon} ${s.name}</span>
+                <span class="s-role">${s.station}</span>
               </div>
-              <span class="badge" style="background:#ffe4e6; color:#9f1239;">OFF / LEAVE</span>
-            </div>
-          `;
-          return;
-        }
-
-        let badgeBg = "#d1fae5";
-        let badgeText = "#065f46";
-        let stLabel = statusLabels[st];
-
-        if (st === "M") { badgeBg = "#e0f2fe"; badgeText = "#0369a1"; }
-        if (st === "E") { badgeBg = "#f3e8ff"; badgeText = "#6b21a8"; }
-        if (st === "H") { badgeBg = "#fef3c7"; badgeText = "#92400e"; }
-
-        const cardHtml = `
-          <div class="staff-row" style="border-left: 4px solid #10b981;">
-            <div class="info">
-              <div class="name">${s.icon} ${s.name}</div>
-              <div class="role">${s.role}</div>
-            </div>
-            <span class="badge" style="background:${badgeBg}; color:${badgeText};">${stLabel}</span>
-          </div>
+            </td>
+            <td><span style="font-weight:700; color:#475569; font-size:0.88rem;">${shiftText}</span></td>
+            <td>
+              <select class="att-select att-${curAtt.status}" onchange="updateAttendance(${s.id}, 'status', this.value)">
+                <option value="Present" ${curAtt.status==='Present'?'selected':''}>✅ Present (On Duty)</option>
+                <option value="Late" ${curAtt.status==='Late'?'selected':''}>⏱️ Late Arrived</option>
+                <option value="Leave" ${curAtt.status==='Leave'?'selected':''}>🏖️ Approved Leave</option>
+                <option value="Absent" ${curAtt.status==='Absent'?'selected':''}>❌ Absent (Unexcused)</option>
+              </select>
+            </td>
+            <td>
+              <div class="time-inputs">
+                <input type="text" value="${curAtt.inTime}" onchange="updateAttendance(${s.id}, 'inTime', this.value)">
+                <span>to</span>
+                <input type="text" value="${curAtt.outTime}" onchange="updateAttendance(${s.id}, 'outTime', this.value)">
+              </div>
+            </td>
+          </tr>
         `;
-
-        if (s.dept === "Kitchen") {
-          kitchenContainer.innerHTML += cardHtml;
-        } else {
-          serviceContainer.innerHTML += cardHtml;
-        }
       });
 
-      if (leavesCount === 0) {
-        leaveContainer.innerHTML = `<p style="color:var(--text-muted); font-size:0.9rem; padding:8px;">✅ All active staff present today.</p>`;
-      }
-
-      if (notJoinedList.length > 0) {
-        leaveContainer.innerHTML += `
-          <div style="margin-top:12px; padding-top:8px; border-top:1px dashed #cbd5e1; font-size:0.8rem; color:#64748b;">
-            ⏳ <strong>Not Joined Yet Today:</strong><br>${notJoinedList.join(", ")}
-          </div>
+      // Render Cleaning Tasks
+      const grid = document.getElementById("cleanTaskGrid"); grid.innerHTML = "";
+      cleaningTasks.forEach(ct => {
+        const isChecked = stObj.checkedTasks.includes(ct.id);
+        grid.innerHTML += `
+          <label class="clean-task-item ${isChecked ? 'checked' : ''}">
+            <input type="checkbox" ${isChecked ? 'checked' : ''} onchange="toggleCleanTask('${ct.id}')">
+            <div>
+              <span class="task-station">${ct.station}</span>
+              <span class="task-desc">${ct.task}</span>
+            </div>
+          </label>
         `;
+      });
+    }
+
+    function updateAttendance(staffId, field, val) {
+      const dateVal = document.getElementById("dailyDateInput").value;
+      if (!dailyState[dateVal]) return;
+      if (!dailyState[dateVal].attendance[staffId]) dailyState[dateVal].attendance[staffId] = {};
+      dailyState[dateVal].attendance[staffId][field] = val;
+      saveDailyState();
+      renderDailyView();
+    }
+
+    function toggleCleaningDay() {
+      const dateVal = document.getElementById("dailyDateInput").value;
+      if (!dailyState[dateVal]) return;
+      dailyState[dateVal].isCleaning = document.getElementById("cleanSwitch").checked;
+      saveDailyState();
+      renderDailyView();
+      showToast(dailyState[dateVal].isCleaning ? "🧹 Deep Cleaning Protocols Activated!" : "Regular Service Mode Restored.");
+    }
+
+    function toggleCleanTask(taskId) {
+      const dateVal = document.getElementById("dailyDateInput").value;
+      if (!dailyState[dateVal]) return;
+      let tasks = dailyState[dateVal].checkedTasks;
+      if (tasks.includes(taskId)) dailyState[dateVal].checkedTasks = tasks.filter(t => t !== taskId);
+      else dailyState[dateVal].checkedTasks.push(taskId);
+      saveDailyState();
+      renderDailyView();
+    }
+
+    function saveDailyState() {
+      const dateVal = document.getElementById("dailyDateInput").value;
+      if (dailyState[dateVal]) {
+        dailyState[dateVal].notes = document.getElementById("dailyNotesInput").value;
       }
+      try {
+        localStorage.setItem("restaurant_daily_state", JSON.stringify(dailyState));
+      } catch (e) {}
     }
 
     function getFormattedWhatsAppText() {
       const dateVal = document.getElementById("dailyDateInput").value;
-      if (!dateVal) return "";
-
+      if (!dateVal || !dailyState[dateVal]) return "";
       const [y, m, d] = dateVal.split("-").map(Number);
-      const dayNum = d;
-      const monthIdx = m - 1;
-      const dt = new Date(y, monthIdx, dayNum);
+      const dt = new Date(y, m - 1, d);
       const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-      const dowName = dayNames[dt.getDay()];
+      const stObj = dailyState[dateVal];
 
-      const monthData = rosterData[y][monthIdx];
+      let msg = `📅 *RESTAURANT DAILY OPERATIONS REPORT*\n`;
+      msg += `📆 *Date:* ${dayNames[dt.getDay()]}, ${d} ${months[m-1]} ${y}\n`;
+      msg += `🧹 *Mode:* ${stObj.isCleaning ? '🧹 Deep Cleaning Day & Service' : '🍽️ Regular Service Mode'}\n\n`;
 
-      let msg = `📅 *RESTAURANT WORK ROSTER*\n`;
-      msg += `📆 *Date:* ${dowName}, ${dayNum} ${months[monthIdx]} ${y}\n\n`;
-
-      let workingKitchen = [];
-      let workingService = [];
-      let onLeave = [];
+      let workingList = [];
+      let leaveList = [];
 
       staffList.forEach(s => {
-        const st = monthData[s.id][dayNum] || "W";
-        if (st === "NJ") return; // omit not joined
+        const att = stObj.attendance[s.id];
+        if (!att || att.status === "Not Joined") return;
 
-        if (st === "L") {
-          onLeave.push(`${s.name} (${s.role})`);
+        if (att.status === "Leave" || att.status === "Absent") {
+          leaveList.push(`❌ *${s.name}* [${s.role}] — (${att.status})`);
         } else {
-          const stStr = st === "W" ? "Full Day" : statusLabels[st];
-          const entry = `${s.name} [${stStr}]`;
-          if (s.dept === "Kitchen") workingKitchen.push(entry);
-          else workingService.push(entry);
+          let icon = att.status === "Present" ? "✅" : "⏱️ LATE";
+          workingList.push(`${icon} *${s.name}* [${s.station.split(" ")[1] || s.station}] (${att.inTime} – ${att.outTime})`);
         }
       });
 
-      msg += `👨‍🍳 *KITCHEN ON DUTY:*\n`;
-      workingKitchen.forEach(k => msg += `▫️ ${k}\n`);
+      msg += `👨‍🍳 *ON DUTY STATIONS & ATTENDANCE:*\n`;
+      workingList.forEach(w => msg += `▫️ ${w}\n`);
 
-      msg += `\n🍽️ *SERVICE ON DUTY:*\n`;
-      workingService.forEach(srv => msg += `▫️ ${srv}\n`);
+      msg += `\n🏖️ *ON LEAVE / ABSENT:*\n`;
+      if (leaveList.length === 0) msg += `▫️ None (All Active Staff Working)\n`;
+      else leaveList.forEach(l => msg += `▫️ ${l}\n`);
 
-      msg += `\n🏖️ *ON LEAVE TODAY:*\n`;
-      if (onLeave.length === 0) {
-        msg += `▫️ None (All Active Staff Working)\n`;
-      } else {
-        onLeave.forEach(l => msg += `▫️ ❌ ${l}\n`);
+      if (stObj.isCleaning) {
+        msg += `\n🧹 *DEEP CLEANING PROTOCOLS:*\n`;
+        cleaningTasks.forEach(ct => {
+          let box = stObj.checkedTasks.includes(ct.id) ? "☑️ [CLEANED]" : "☐ [PENDING]";
+          msg += `${box} ${ct.station.split(" ")[1]}\n`;
+        });
       }
 
-      msg += `\n_Please report on time!_`;
+      if (stObj.notes && stObj.notes.trim() !== "") {
+        msg += `\n📝 *MANAGER HANDOVER NOTES:*\n_${stObj.notes.trim()}_\n`;
+      }
+
+      msg += `\n_Report generated via Command Center_`;
       return msg;
     }
 
     function showWhatsAppModal() {
       const txt = getFormattedWhatsAppText();
       const modal = document.getElementById("waModal");
-      const ta = document.getElementById("waTextArea");
-      ta.value = txt;
+      document.getElementById("waTextArea").value = txt;
       modal.classList.add("show");
-
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(txt).catch(() => {});
-      }
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).catch(()=>{});
     }
 
-    function closeModal() {
-      document.getElementById("waModal").classList.remove("show");
-    }
+    function closeModal() { document.getElementById("waModal").classList.remove("show"); }
 
     function copyModalText() {
-      const ta = document.getElementById("waTextArea");
-      ta.select();
-      ta.setSelectionRange(0, 99999);
-      try {
-        document.execCommand("copy");
-        showToast("✅ WhatsApp Roster copied to clipboard!");
-        closeModal();
-      } catch (e) {
-        alert("Please manually press Ctrl+C or Cmd+C to copy!");
-      }
+      const ta = document.getElementById("waTextArea"); ta.select(); ta.setSelectionRange(0, 99999);
+      try { document.execCommand("copy"); showToast("✅ WhatsApp Report copied to clipboard!"); closeModal(); }
+      catch(e) { alert("Please press Ctrl+C or Cmd+C to copy!"); }
     }
 
     function exportToCSV() {
       const numDays = getDaysInMonth(currentYear, currentMonth);
-      const monthData = rosterData[currentYear][currentMonth];
-
-      let csv = `Staff Name,Role,Department,Target Quota,Assigned Leaves,`;
+      const mData = rosterData[currentYear][currentMonth];
+      let csv = `Staff Name,Role,Station,Target Quota,Assigned Leaves,`;
       for (let d = 1; d <= numDays; d++) csv += `Day ${d},`;
       csv += `\n`;
-
       staffList.forEach(s => {
-        let leaveCount = 0;
-        for (let d = 1; d <= numDays; d++) {
-          if (monthData[s.id][d] === "L") leaveCount++;
-        }
+        let leaveCount = sumLeaves(s.id, numDays, mData);
         const target = getTargetQuota(s, currentYear, currentMonth);
-
-        let row = `"${s.name}","${s.role}","${s.dept}",${target},${leaveCount},`;
-        for (let d = 1; d <= numDays; d++) {
-          row += `"${monthData[s.id][d]}",`;
-        }
+        let row = `"${s.name}","${s.role}","${s.station}",${target},${leaveCount},`;
+        for (let d = 1; d <= numDays; d++) row += `"${mData[s.id][d]}",`;
         csv += row + `\n`;
       });
-
       const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-      const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
-      link.setAttribute("href", url);
+      link.setAttribute("href", URL.createObjectURL(blob));
       link.setAttribute("download", `Restaurant_Roster_${months[currentMonth]}_${currentYear}.csv`);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      document.body.appendChild(link); link.click(); document.body.removeChild(link);
       showToast("📥 CSV Exported successfully!");
     }
 
     function showToast(text) {
-      const toast = document.getElementById("toast");
-      document.getElementById("toastMsg").textContent = text;
-      toast.classList.add("show");
-      setTimeout(() => {
-        toast.classList.remove("show");
-      }, 3000);
+      const toast = document.getElementById("toast"); document.getElementById("toastMsg").textContent = text;
+      toast.classList.add("show"); setTimeout(() => toast.classList.remove("show"), 3000);
     }
 
     window.onload = init;
   </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a115a4fdb953d93e',t:'MTc4MjQwODA0Mw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</body>
 </html>
