@@ -24,6 +24,8 @@
       --status-eve-text: #6b21a8;
       --status-half-bg: #fef3c7;
       --status-half-text: #92400e;
+      --status-nj-bg: #f1f5f9;
+      --status-nj-text: #94a3b8;
     }
 
     * {
@@ -163,7 +165,7 @@
     /* Summary Cards */
     .summary-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 16px;
       margin-bottom: 24px;
     }
@@ -199,6 +201,12 @@
       padding: 2px 8px;
       border-radius: 12px;
       font-weight: 500;
+    }
+
+    .staff-join-meta {
+      font-size: 0.75rem;
+      color: #64748b;
+      margin-top: 4px;
     }
 
     .leave-badge {
@@ -250,7 +258,7 @@
       left: 0;
       background: #f8fafc;
       z-index: 20;
-      min-width: 160px;
+      min-width: 170px;
       box-shadow: 2px 0 5px rgba(0,0,0,0.05);
     }
 
@@ -319,6 +327,7 @@
     .st-M { background: var(--status-morn-bg); color: var(--status-morn-text); }
     .st-E { background: var(--status-eve-bg); color: var(--status-eve-text); }
     .st-H { background: var(--status-half-bg); color: var(--status-half-text); }
+    .st-NJ { background: var(--status-nj-bg); color: var(--status-nj-text); font-size: 0.75rem; cursor: not-allowed; }
 
     /* Legend */
     .legend {
@@ -679,7 +688,7 @@
   <header>
     <div>
       <h1>📋 Restaurant Staff Roster System</h1>
-      <p>Automated Daily & Monthly Shift Management (2 Leaves / Staff Rule)</p>
+      <p>Automated Daily & Monthly Shift Management (Joining Date Aware)</p>
     </div>
     <div class="controls-bar">
       <label for="monthSelect">Month:</label>
@@ -695,13 +704,14 @@
   </header>
 
   <div class="rules-banner">
-    <strong>🛡️ Active Smart Scheduling Rules:</strong>
+    <strong>🛡️ Active Smart Scheduling Rules & Joining Dates:</strong>
     <ul>
-      <li><strong>Quota:</strong> Exactly <strong>2 Paid Leaves</strong> allocated per staff member every month.</li>
+      <li><strong>Joining Dates:</strong> Dilip (12 June), Dev (17 June), Amit (25 June). Days before joining show as <strong>NJ (Not Joined)</strong>.</li>
+      <li><strong>Prorated Quota:</strong> Staff active 20+ days get <strong>2 leaves</strong>. Staff active 10–19 days get <strong>1 leave</strong>. <10 days get 0 leaves.</li>
       <li><strong>Kitchen Continuity:</strong> Chef 1 (Jannat) & Chef 2 (Dilip) are <em>never</em> assigned leave on the same day.</li>
       <li><strong>Scullery Continuity:</strong> Mori Wala 1 (Dev) & Mori Wala 2 (Amit) are <em>never</em> assigned leave on the same day.</li>
       <li><strong>Peak Protection:</strong> Leaves are preferentially distributed across Mon/Tue/Wed/Thu to keep full staff on weekend peak days (Fri/Sat/Sun).</li>
-      <li><strong>Interactive:</strong> Click any status cell on the grid to cycle between: <strong>Work (W) ➔ Leave (L) ➔ Morning (M) ➔ Evening (E) ➔ Half-Day (H)</strong>.</li>
+      <li><strong>Interactive:</strong> Click any working status cell on the grid to cycle: <strong>Work (W) ➔ Leave (L) ➔ Morning (M) ➔ Evening (E) ➔ Half-Day (H)</strong>.</li>
     </ul>
   </div>
 
@@ -734,12 +744,13 @@
 
     <!-- Legend -->
     <div class="legend">
-      <span style="font-weight:700; color:var(--text-muted);">Legend (Click cells to change):</span>
+      <span style="font-weight:700; color:var(--text-muted);">Legend:</span>
       <div class="legend-item"><div class="legend-box st-W">W</div> Present (Full Day)</div>
       <div class="legend-item"><div class="legend-box st-L">L</div> Leave (Off)</div>
       <div class="legend-item"><div class="legend-box st-M">M</div> Morning Shift</div>
       <div class="legend-item"><div class="legend-box st-E">E</div> Evening Shift</div>
       <div class="legend-item"><div class="legend-box st-H">H</div> Half Day</div>
+      <div class="legend-item"><div class="legend-box st-NJ">NJ</div> Not Joined Yet</div>
     </div>
 
   </div>
@@ -821,13 +832,13 @@
   </div>
 
   <script>
-    // Initial Staff Definition
+    // Staff Definition with Joining Dates
     const staffList = [
-      { id: 1, name: "Jannat", role: "Chef 1", dept: "Kitchen", icon: "👨‍🍳" },
-      { id: 2, name: "Dilip", role: "Chef 2", dept: "Kitchen", icon: "👨‍🍳" },
-      { id: 3, name: "Dev", role: "Mori Wala 1", dept: "Kitchen", icon: "🫧" },
-      { id: 4, name: "Amit", role: "Mori Wala 2", dept: "Kitchen", icon: "🫧" },
-      { id: 5, name: "Nafeez", role: "Waiter", dept: "Service", icon: "🍽️" }
+      { id: 1, name: "Jannat", role: "Chef 1", dept: "Kitchen", icon: "👨‍🍳", joinDate: "2026-01-01", joinText: "Existing Staff" },
+      { id: 2, name: "Dilip", role: "Chef 2", dept: "Kitchen", icon: "👨‍🍳", joinDate: "2026-06-12", joinText: "Joined: 12 June" },
+      { id: 3, name: "Dev", role: "Mori Wala 1", dept: "Kitchen", icon: "🫧", joinDate: "2026-06-17", joinText: "Joined: 17 June" },
+      { id: 4, name: "Amit", role: "Mori Wala 2", dept: "Kitchen", icon: "🫧", joinDate: "2026-06-25", joinText: "Joined: 25 June" },
+      { id: 5, name: "Nafeez", role: "Waiter", dept: "Service", icon: "🍽️", joinDate: "2026-01-01", joinText: "Existing Staff" }
     ];
 
     const months = [
@@ -841,18 +852,18 @@
       "L": "Leave (Off)",
       "M": "Morning Shift",
       "E": "Evening Shift",
-      "H": "Half Day"
+      "H": "Half Day",
+      "NJ": "Not Joined Yet"
     };
 
-    // State: rosterData[year][month][staffId][day] = "W" | "L" | "M" | "E" | "H"
+    // State: rosterData[year][month][staffId][day]
     let rosterData = {};
 
     let currentYear = 2026;
-    let currentMonth = 6; // July (0-indexed)
+    let currentMonth = 5; // June (0-indexed) where Dilip, Dev, Amit join
 
     function init() {
-      // Set current date (Defaulting to July 2026 based on prompt context)
-      const now = new Date(2026, 6, 25);
+      const now = new Date(2026, 5, 25); // Default to June 2026
       currentYear = now.getFullYear();
       currentMonth = now.getMonth();
 
@@ -890,10 +901,26 @@
       return new Date(year, month + 1, 0).getDate();
     }
 
+    function getTargetQuota(staff, year, monthIdx) {
+      const numDays = getDaysInMonth(year, monthIdx);
+      const [jy, jm, jd] = staff.joinDate.split("-").map(Number);
+      const joinDt = new Date(jy, jm - 1, jd);
+
+      let activeCount = 0;
+      for (let d = 1; d <= numDays; d++) {
+        const cellDt = new Date(year, monthIdx, d);
+        if (cellDt >= joinDt) activeCount++;
+      }
+
+      if (activeCount >= 20) return 2;
+      if (activeCount >= 10) return 1;
+      return 0;
+    }
+
     function loadOrGenerateMonth() {
       if (!rosterData[currentYear]) rosterData[currentYear] = {};
       if (!rosterData[currentYear][currentMonth]) {
-        autoGenerateSchedule(true); // silent generation
+        autoGenerateSchedule(true);
       } else {
         renderAll();
       }
@@ -905,49 +932,90 @@
       if (!rosterData[currentYear]) rosterData[currentYear] = {};
       rosterData[currentYear][currentMonth] = {};
 
-      // Initialize all working
+      // Initialize days aware of joinDate
       staffList.forEach(s => {
         rosterData[currentYear][currentMonth][s.id] = {};
+        const [jy, jm, jd] = s.joinDate.split("-").map(Number);
+        const joinDt = new Date(jy, jm - 1, jd);
+
         for (let d = 1; d <= numDays; d++) {
-          rosterData[currentYear][currentMonth][s.id][d] = "W";
+          const cellDt = new Date(currentYear, currentMonth, d);
+          if (cellDt < joinDt) {
+            rosterData[currentYear][currentMonth][s.id][d] = "NJ";
+          } else {
+            rosterData[currentYear][currentMonth][s.id][d] = "W";
+          }
         }
       });
 
-      // Find weekdays in month (0 = Sun, 1 = Mon, ..., 6 = Sat)
-      let mondays = [];
-      let tuesdays = [];
-      let wednesdays = [];
-      let thursdays = [];
-
-      for (let d = 1; d <= numDays; d++) {
-        const dt = new Date(currentYear, currentMonth, d);
-        const dayOfWeek = dt.getDay();
-        if (dayOfWeek === 1) mondays.push(d);
-        if (dayOfWeek === 2) tuesdays.push(d);
-        if (dayOfWeek === 3) wednesdays.push(d);
-        if (dayOfWeek === 4) thursdays.push(d);
-      }
-
-      // Assign exactly 2 leaves per staff
-      // Rule 1: Chef 1 (Jannat) & Chef 2 (Dilip) never same day
-      // Rule 2: Mori 1 (Dev) & Mori 2 (Amit) never same day
-      
-      assignLeave(1, mondays[0] || 2, mondays[2] || 16);
-      assignLeave(2, tuesdays[0] || 3, tuesdays[2] || 17);
-      assignLeave(3, wednesdays[0] || 4, wednesdays[2] || 18);
-      assignLeave(4, thursdays[0] || 5, thursdays[2] || 19);
-      assignLeave(5, tuesdays[1] || 10, tuesdays[3] || 24);
+      // Preferred weekdays map (1=Mon, 2=Tue, 3=Wed, 4=Thu)
+      // Jannat -> Mon (1), Dilip -> Tue (2), Dev -> Wed (3), Amit -> Thu (4), Nafeez -> Tue (2)
+      assignSmartLeaves(1, 1);
+      assignSmartLeaves(2, 2);
+      assignSmartLeaves(3, 3);
+      assignSmartLeaves(4, 4);
+      assignSmartLeaves(5, 2, [2]); // Nafeez offset if conflicting
 
       renderAll();
       if (!silent) {
-        showToast(`Smart Roster Generated for ${months[currentMonth]} ${currentYear}!`);
+        showToast(`Roster Generated for ${months[currentMonth]} ${currentYear}!`);
       }
     }
 
-    function assignLeave(staffId, day1, day2) {
-      const maxDay = getDaysInMonth(currentYear, currentMonth);
-      if (day1 <= maxDay) rosterData[currentYear][currentMonth][staffId][day1] = "L";
-      if (day2 <= maxDay) rosterData[currentYear][currentMonth][staffId][day2] = "L";
+    function assignSmartLeaves(staffId, preferredDow, avoidStaffIds = []) {
+      const numDays = getDaysInMonth(currentYear, currentMonth);
+      const s = staffList.find(st => st.id === staffId);
+      const targetQuota = getTargetQuota(s, currentYear, currentMonth);
+      if (targetQuota === 0) return;
+
+      const [jy, jm, jd] = s.joinDate.split("-").map(Number);
+      const joinDt = new Date(jy, jm - 1, jd);
+
+      let candidates = [];
+      for (let d = 1; d <= numDays; d++) {
+        const dt = new Date(currentYear, currentMonth, d);
+        // Must be on or after join date
+        if (dt < joinDt) continue;
+        // Don't assign leave on exact joining day
+        if (currentYear === jy && currentMonth === (jm - 1) && d === jd) continue;
+
+        if (dt.getDay() === preferredDow) {
+          // Check role conflict
+          let conflict = false;
+          if (staffId === 1 && rosterData[currentYear][currentMonth][2][d] === "L") conflict = true;
+          if (staffId === 2 && rosterData[currentYear][currentMonth][1][d] === "L") conflict = true;
+          if (staffId === 3 && rosterData[currentYear][currentMonth][4][d] === "L") conflict = true;
+          if (staffId === 4 && rosterData[currentYear][currentMonth][3][d] === "L") conflict = true;
+
+          if (!conflict) candidates.push(d);
+        }
+      }
+
+      // Fallback if not enough weekdays
+      if (candidates.length < targetQuota) {
+        for (let d = 1; d <= numDays; d++) {
+          const dt = new Date(currentYear, currentMonth, d);
+          if (dt < joinDt || (currentYear === jy && currentMonth === (jm - 1) && d === jd)) continue;
+          const dow = dt.getDay();
+          if (dow >= 1 && dow <= 4 && !candidates.includes(d)) {
+            let conflict = false;
+            if (staffId === 1 && rosterData[currentYear][currentMonth][2][d] === "L") conflict = true;
+            if (staffId === 2 && rosterData[currentYear][currentMonth][1][d] === "L") conflict = true;
+            if (staffId === 3 && rosterData[currentYear][currentMonth][4][d] === "L") conflict = true;
+            if (staffId === 4 && rosterData[currentYear][currentMonth][3][d] === "L") conflict = true;
+            if (!conflict) candidates.push(d);
+          }
+        }
+      }
+
+      candidates.sort((a, b) => a - b);
+
+      if (targetQuota === 2 && candidates.length >= 2) {
+        rosterData[currentYear][currentMonth][staffId][candidates[0]] = "L";
+        rosterData[currentYear][currentMonth][staffId][candidates[candidates.length > 2 ? 2 : 1]] = "L";
+      } else if (targetQuota >= 1 && candidates.length >= 1) {
+        rosterData[currentYear][currentMonth][staffId][candidates[Math.floor(candidates.length / 2)]] = "L";
+      }
     }
 
     function renderAll() {
@@ -957,7 +1025,6 @@
       renderDailyView();
     }
 
-    // Render Summary Cards
     function renderSummary() {
       const container = document.getElementById("summaryGrid");
       container.innerHTML = "";
@@ -970,14 +1037,16 @@
           if (monthData[s.id][d] === "L") leaveCount++;
         }
 
+        const target = getTargetQuota(s, currentYear, currentMonth);
+
         let badgeClass = "leaves-ok";
-        let badgeText = `${leaveCount} / 2 Leaves Assigned`;
-        if (leaveCount < 2) {
+        let badgeText = `${leaveCount} / ${target} Leaves Assigned`;
+        if (leaveCount < target) {
           badgeClass = "leaves-warn";
-          badgeText = `⚠️ ${leaveCount} / 2 Leaves (Under quota)`;
-        } else if (leaveCount > 2) {
+          badgeText = `⚠️ ${leaveCount} / ${target} Leaves (Under quota)`;
+        } else if (leaveCount > target) {
           badgeClass = "leaves-err";
-          badgeText = `🚨 ${leaveCount} / 2 Leaves (Over quota!)`;
+          badgeText = `🚨 ${leaveCount} / ${target} Leaves (Over quota!)`;
         }
 
         const card = document.createElement("div");
@@ -988,6 +1057,7 @@
               <span class="staff-name">${s.icon} ${s.name}</span>
               <span class="staff-role">${s.role}</span>
             </div>
+            <div class="staff-join-meta">📅 ${s.joinText}</div>
           </div>
           <div>
             <div class="leave-badge ${badgeClass}">${badgeText}</div>
@@ -997,13 +1067,11 @@
       });
     }
 
-    // Render Monthly Grid Table
     function renderTable() {
       const numDays = getDaysInMonth(currentYear, currentMonth);
       const headRow = document.getElementById("tableHeaderRow");
       const tbody = document.getElementById("tableBody");
 
-      // Clear existing day columns
       while (headRow.children.length > 1) {
         headRow.removeChild(headRow.lastChild);
       }
@@ -1011,11 +1079,10 @@
 
       const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-      // Add day columns header
       for (let d = 1; d <= numDays; d++) {
         const dt = new Date(currentYear, currentMonth, d);
         const dow = dt.getDay();
-        const isWeekend = (dow === 0 || dow === 5 || dow === 6); // Fri, Sat, Sun as peak
+        const isWeekend = (dow === 0 || dow === 5 || dow === 6);
 
         const th = document.createElement("th");
         if (isWeekend) th.className = "weekend";
@@ -1030,20 +1097,20 @@
 
       const monthData = rosterData[currentYear][currentMonth];
 
-      // Add Staff Rows
       staffList.forEach(s => {
         const tr = document.createElement("tr");
 
-        // Staff name sticky cell
         const tdName = document.createElement("td");
         tdName.className = "sticky-col";
         tdName.innerHTML = `
           <div style="font-weight:700; color:var(--text-main);">${s.name}</div>
-          <div style="font-size:0.75rem; color:var(--text-muted);">${s.role}</div>
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-size:0.75rem; color:var(--text-muted);">${s.role}</span>
+            <span style="font-size:0.7rem; background:#f1f5f9; padding:1px 6px; border-radius:4px; color:#64748b;">${s.joinText}</span>
+          </div>
         `;
         tr.appendChild(tdName);
 
-        // Days cells
         for (let d = 1; d <= numDays; d++) {
           const dt = new Date(currentYear, currentMonth, d);
           const dow = dt.getDay();
@@ -1059,7 +1126,11 @@
           cellDiv.textContent = st;
           cellDiv.title = `${s.name} - Day ${d}: ${statusLabels[st]}`;
 
-          cellDiv.onclick = () => cycleStatus(s.id, d);
+          if (st !== "NJ") {
+            cellDiv.onclick = () => cycleStatus(s.id, d);
+          } else {
+            cellDiv.onclick = () => showToast(`ℹ️ ${s.name} joined on ${s.joinDate}. Not employed before this date.`);
+          }
 
           td.appendChild(cellDiv);
           tr.appendChild(td);
@@ -1071,18 +1142,19 @@
 
     function cycleStatus(staffId, day) {
       const current = rosterData[currentYear][currentMonth][staffId][day] || "W";
-      const nextIdx = (statusCycle.indexOf(current) + 1) % statusCycle.length;
-      const nextStatus = statusCycle[nextIdx];
+      if (current === "NJ") return;
+
+      const validCycle = ["W", "L", "M", "E", "H"];
+      const nextIdx = (validCycle.indexOf(current) + 1) % validCycle.length;
+      const nextStatus = validCycle[nextIdx];
 
       rosterData[currentYear][currentMonth][staffId][day] = nextStatus;
       
-      // Fast re-render
       renderSummary();
       renderTable();
       renderDailyView();
     }
 
-    // Switch Tabs
     function switchTab(tabId) {
       document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
       document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
@@ -1096,30 +1168,32 @@
       }
     }
 
-    // Daily View Functions
     function initDailyDatePicker() {
       const dateInput = document.getElementById("dailyDateInput");
-      // Format YYYY-MM-DD
       const mm = String(currentMonth + 1).padStart(2, '0');
-      const dd = "01";
+      const dd = "25"; // Pick 25th where all staff are joined
       dateInput.value = `${currentYear}-${mm}-${dd}`;
 
-      // Populate quick dates
       const container = document.getElementById("quickDatesContainer");
       container.innerHTML = "";
 
       const numDays = getDaysInMonth(currentYear, currentMonth);
       const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-      [1, 7, 14, 21, numDays].forEach(d => {
+      [1, 12, 17, 25, numDays].forEach(d => {
         if (d > numDays) return;
         const dt = new Date(currentYear, currentMonth, d);
         const dow = dt.getDay();
         const dateStr = `${currentYear}-${mm}-${String(d).padStart(2, '0')}`;
 
+        let note = "";
+        if (d === 12) note = " (Dilip Joins)";
+        if (d === 17) note = " (Dev Joins)";
+        if (d === 25) note = " (Amit Joins)";
+
         const btn = document.createElement("button");
         btn.className = "quick-date-btn";
-        btn.innerHTML = `<span>${months[currentMonth]} ${d}</span> <span style="font-size:0.8rem; color:var(--text-muted);">${dayNames[dow]}</span>`;
+        btn.innerHTML = `<span>${months[currentMonth]} ${d}${note}</span> <span style="font-size:0.8rem; color:var(--text-muted);">${dayNames[dow]}</span>`;
         btn.onclick = () => {
           dateInput.value = dateStr;
           renderDailyView();
@@ -1160,9 +1234,15 @@
       leaveContainer.innerHTML = "";
 
       let leavesCount = 0;
+      let notJoinedList = [];
 
       staffList.forEach(s => {
         const st = monthData[s.id][dayNum] || "W";
+
+        if (st === "NJ") {
+          notJoinedList.push(`${s.name} (joins ${s.joinDate})`);
+          return;
+        }
 
         if (st === "L") {
           leavesCount++;
@@ -1204,7 +1284,15 @@
       });
 
       if (leavesCount === 0) {
-        leaveContainer.innerHTML = `<p style="color:var(--text-muted); font-size:0.9rem; padding:8px;">✅ All staff present today.</p>`;
+        leaveContainer.innerHTML = `<p style="color:var(--text-muted); font-size:0.9rem; padding:8px;">✅ All active staff present today.</p>`;
+      }
+
+      if (notJoinedList.length > 0) {
+        leaveContainer.innerHTML += `
+          <div style="margin-top:12px; padding-top:8px; border-top:1px dashed #cbd5e1; font-size:0.8rem; color:#64748b;">
+            ⏳ <strong>Not Joined Yet Today:</strong><br>${notJoinedList.join(", ")}
+          </div>
+        `;
       }
     }
 
@@ -1230,6 +1318,8 @@
 
       staffList.forEach(s => {
         const st = monthData[s.id][dayNum] || "W";
+        if (st === "NJ") return; // omit not joined
+
         if (st === "L") {
           onLeave.push(`${s.name} (${s.role})`);
         } else {
@@ -1248,7 +1338,7 @@
 
       msg += `\n🏖️ *ON LEAVE TODAY:*\n`;
       if (onLeave.length === 0) {
-        msg += `▫️ None (All Staff Working)\n`;
+        msg += `▫️ None (All Active Staff Working)\n`;
       } else {
         onLeave.forEach(l => msg += `▫️ ❌ ${l}\n`);
       }
@@ -1264,7 +1354,6 @@
       ta.value = txt;
       modal.classList.add("show");
 
-      // Attempt automatic clipboard copy in background
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(txt).catch(() => {});
       }
@@ -1277,7 +1366,7 @@
     function copyModalText() {
       const ta = document.getElementById("waTextArea");
       ta.select();
-      ta.setSelectionRange(0, 99999); // mobile compatibility
+      ta.setSelectionRange(0, 99999);
       try {
         document.execCommand("copy");
         showToast("✅ WhatsApp Roster copied to clipboard!");
@@ -1291,7 +1380,7 @@
       const numDays = getDaysInMonth(currentYear, currentMonth);
       const monthData = rosterData[currentYear][currentMonth];
 
-      let csv = `Staff Name,Role,Department,Total Leaves,`;
+      let csv = `Staff Name,Role,Department,Target Quota,Assigned Leaves,`;
       for (let d = 1; d <= numDays; d++) csv += `Day ${d},`;
       csv += `\n`;
 
@@ -1300,8 +1389,9 @@
         for (let d = 1; d <= numDays; d++) {
           if (monthData[s.id][d] === "L") leaveCount++;
         }
+        const target = getTargetQuota(s, currentYear, currentMonth);
 
-        let row = `"${s.name}","${s.role}","${s.dept}",${leaveCount},`;
+        let row = `"${s.name}","${s.role}","${s.dept}",${target},${leaveCount},`;
         for (let d = 1; d <= numDays; d++) {
           row += `"${monthData[s.id][d]}",`;
         }
@@ -1330,5 +1420,5 @@
 
     window.onload = init;
   </script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a115a4fdb953d93e',t:'MTc4MjQwODA0Mw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
