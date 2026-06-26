@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Restaurant Daily Operations & Roster System</title>
+  <title>Indus Wok — Night Shift Roster & Operations System</title>
   <style>
     :root {
       --primary: #1e3a8a;
@@ -58,16 +58,18 @@
 
     header h1 {
       font-size: 1.8rem;
-      font-weight: 700;
+      font-weight: 800;
       margin-bottom: 4px;
       display: flex;
       align-items: center;
       gap: 12px;
+      letter-spacing: -0.5px;
     }
 
     header p {
       color: #bfdbfe;
       font-size: 0.95rem;
+      font-weight: 500;
     }
 
     .controls-bar {
@@ -115,9 +117,7 @@
       border: none !important;
     }
 
-    .btn-secondary:hover {
-      background: #f1f5f9;
-    }
+    .btn-secondary:hover { background: #f1f5f9; }
 
     /* Tabs */
     .tabs {
@@ -154,13 +154,8 @@
     }
 
     /* Tab Content */
-    .tab-content {
-      display: none;
-    }
-
-    .tab-content.active {
-      display: block;
-    }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
 
     /* Summary Cards */
     .summary-grid {
@@ -171,63 +166,24 @@
     }
 
     .staff-stat-card {
-      background: white;
-      padding: 16px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      background: white; padding: 16px; border-radius: 12px; border: 1px solid var(--border);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between;
     }
 
-    .staff-stat-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 8px;
-    }
-
-    .staff-name {
-      font-weight: 700;
-      font-size: 1.05rem;
-      color: var(--text-main);
-    }
-
-    .staff-role {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      background: #f1f5f9;
-      padding: 2px 8px;
-      border-radius: 12px;
-      font-weight: 500;
-    }
+    .staff-stat-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+    .staff-name { font-weight: 700; font-size: 1.05rem; color: var(--text-main); }
+    .staff-role { font-size: 0.8rem; color: var(--text-muted); background: #f1f5f9; padding: 2px 8px; border-radius: 12px; font-weight: 500; }
 
     .station-badge {
-      font-size: 0.78rem;
-      color: #1e3a8a;
-      background: #eff6ff;
-      padding: 4px 8px;
-      border-radius: 6px;
-      font-weight: 600;
-      margin-top: 6px;
-      display: inline-block;
+      font-size: 0.78rem; color: #1e3a8a; background: #eff6ff; padding: 4px 8px;
+      border-radius: 6px; font-weight: 600; margin-top: 6px; display: inline-block;
     }
 
-    .staff-join-meta {
-      font-size: 0.75rem;
-      color: #64748b;
-      margin-top: 4px;
-    }
+    .staff-join-meta { font-size: 0.75rem; color: #64748b; margin-top: 4px; }
 
     .leave-badge {
-      display: inline-block;
-      padding: 4px 10px;
-      border-radius: 20px;
-      font-size: 0.82rem;
-      font-weight: 700;
-      margin-top: 8px;
-      text-align: center;
+      display: inline-block; padding: 4px 10px; border-radius: 20px;
+      font-size: 0.82rem; font-weight: 700; margin-top: 8px; text-align: center;
     }
 
     .leaves-ok { background: #d1fae5; color: #065f46; }
@@ -236,102 +192,35 @@
 
     /* Roster Table */
     .table-container {
-      background: white;
-      border-radius: 16px;
-      border: 1px solid var(--border);
-      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-      overflow-x: auto;
-      margin-bottom: 24px;
+      background: white; border-radius: 16px; border: 1px solid var(--border);
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); overflow-x: auto; margin-bottom: 24px;
     }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      text-align: left;
-      font-size: 0.9rem;
-    }
+    table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; }
 
     th {
-      background: #f8fafc;
-      padding: 14px 12px;
-      font-weight: 700;
-      color: var(--text-muted);
-      border-bottom: 2px solid var(--border);
-      border-right: 1px solid var(--border);
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      white-space: nowrap;
+      background: #f8fafc; padding: 14px 12px; font-weight: 700; color: var(--text-muted);
+      border-bottom: 2px solid var(--border); border-right: 1px solid var(--border); position: sticky; top: 0; z-index: 10; white-space: nowrap;
     }
 
-    th.sticky-col {
-      position: sticky;
-      left: 0;
-      background: #f8fafc;
-      z-index: 20;
-      min-width: 180px;
-      box-shadow: 2px 0 5px rgba(0,0,0,0.05);
-    }
+    th.sticky-col { position: sticky; left: 0; background: #f8fafc; z-index: 20; min-width: 190px; box-shadow: 2px 0 5px rgba(0,0,0,0.05); }
 
-    td {
-      padding: 8px 6px;
-      border-bottom: 1px solid var(--border);
-      border-right: 1px solid var(--border);
-      text-align: center;
-      min-width: 48px;
-      height: 54px;
-    }
+    td { padding: 8px 6px; border-bottom: 1px solid var(--border); border-right: 1px solid var(--border); text-align: center; min-width: 48px; height: 54px; }
 
-    td.sticky-col {
-      position: sticky;
-      left: 0;
-      background: white;
-      z-index: 15;
-      text-align: left;
-      padding: 12px;
-      font-weight: 600;
-      box-shadow: 2px 0 5px rgba(0,0,0,0.05);
-    }
+    td.sticky-col { position: sticky; left: 0; background: white; z-index: 15; text-align: left; padding: 12px; font-weight: 600; box-shadow: 2px 0 5px rgba(0,0,0,0.05); }
 
-    .day-header {
-      text-align: center;
-      font-size: 0.8rem;
-    }
-
-    .day-num {
-      font-size: 1.1rem;
-      font-weight: 800;
-      color: var(--text-main);
-    }
-
-    .day-name {
-      text-transform: uppercase;
-      font-size: 0.7rem;
-      color: var(--text-muted);
-    }
-
-    .weekend {
-      background-color: #f1f5f9;
-    }
+    .day-header { text-align: center; font-size: 0.8rem; }
+    .day-num { font-size: 1.1rem; font-weight: 800; color: var(--text-main); }
+    .day-name { text-transform: uppercase; font-size: 0.7rem; color: var(--text-muted); }
+    .weekend { background-color: #f1f5f9; }
 
     /* Cell Buttons / Status */
     .status-cell {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 6px;
-      font-weight: 700;
-      font-size: 0.85rem;
-      cursor: pointer;
-      user-select: none;
-      transition: transform 0.1s;
+      width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+      border-radius: 6px; font-weight: 700; font-size: 0.85rem; cursor: pointer; user-select: none; transition: transform 0.1s;
     }
 
-    .status-cell:active {
-      transform: scale(0.92);
-    }
+    .status-cell:active { transform: scale(0.92); }
 
     .st-W { background: var(--status-work-bg); color: var(--status-work-text); }
     .st-L { background: var(--status-leave-bg); color: var(--status-leave-text); }
@@ -342,402 +231,152 @@
 
     /* Legend */
     .legend {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      background: white;
-      padding: 16px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      align-items: center;
-      font-size: 0.85rem;
+      display: flex; flex-wrap: wrap; gap: 16px; background: white; padding: 16px;
+      border-radius: 12px; border: 1px solid var(--border); align-items: center; font-size: 0.85rem;
     }
 
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .legend-box {
-      width: 28px;
-      height: 28px;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 0.8rem;
-    }
+    .legend-item { display: flex; align-items: center; gap: 8px; }
+    .legend-box { width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.8rem; }
 
     /* Daily Tab Layout */
-    .daily-container {
-      display: grid;
-      grid-template-columns: 310px 1fr;
-      gap: 24px;
-      align-items: start;
-    }
+    .daily-container { display: grid; grid-template-columns: 310px 1fr; gap: 24px; align-items: start; }
 
-    @media (max-width: 950px) {
-      .daily-container {
-        grid-template-columns: 1fr;
-      }
-    }
+    @media (max-width: 980px) { .daily-container { grid-template-columns: 1fr; } }
 
-    .date-picker-card {
-      background: white;
-      padding: 24px;
-      border-radius: 16px;
-      border: 1px solid var(--border);
-      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-    }
+    .date-picker-card { background: white; padding: 24px; border-radius: 16px; border: 1px solid var(--border); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+    .date-picker-card h3 { margin-bottom: 16px; font-size: 1.2rem; color: var(--primary); }
+    .date-picker-card input[type="date"] { width: 100%; padding: 12px; border: 2px solid var(--border); border-radius: 8px; font-size: 1rem; font-weight: 600; margin-bottom: 20px; outline: none; }
 
-    .date-picker-card h3 {
-      margin-bottom: 16px;
-      font-size: 1.2rem;
-      color: var(--primary);
-    }
+    .quick-dates { display: flex; flex-direction: column; gap: 8px; }
+    .quick-date-btn { padding: 10px; text-align: left; background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.2s; display: flex; justify-content: space-between; align-items: center; }
+    .quick-date-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
 
-    .date-picker-card input[type="date"] {
-      width: 100%;
-      padding: 12px;
-      border: 2px solid var(--border);
-      border-radius: 8px;
-      font-size: 1rem;
-      font-weight: 600;
-      margin-bottom: 20px;
-      outline: none;
-    }
+    .daily-card { background: white; border-radius: 16px; border: 1px solid var(--border); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); overflow: hidden; }
 
-    .quick-dates {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
+    .daily-card-header { background: #1e3a8a; color: white; padding: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+    .daily-card-header h2 { font-size: 1.5rem; font-weight: 800; }
 
-    .quick-date-btn {
-      padding: 10px;
-      text-align: left;
-      background: #f8fafc;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: all 0.2s;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+    .cleaning-toggle-box { background: rgba(255,255,255,0.15); padding: 8px 16px; border-radius: 12px; display: flex; align-items: center; gap: 12px; border: 1px solid rgba(255,255,255,0.3); }
+    .cleaning-toggle-box label { font-weight: 700; font-size: 0.95rem; cursor: pointer; user-select: none; }
 
-    .quick-date-btn:hover {
-      background: var(--primary);
-      color: white;
-      border-color: var(--primary);
-    }
-
-    .daily-card {
-      background: white;
-      border-radius: 16px;
-      border: 1px solid var(--border);
-      box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);
-      overflow: hidden;
-    }
-
-    .daily-card-header {
-      background: #1e3a8a;
-      color: white;
-      padding: 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 16px;
-    }
-
-    .daily-card-header h2 {
-      font-size: 1.5rem;
-    }
-
-    .cleaning-toggle-box {
-      background: rgba(255,255,255,0.15);
-      padding: 8px 16px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      border: 1px solid rgba(255,255,255,0.3);
-    }
-
-    .cleaning-toggle-box label {
-      font-weight: 700;
-      font-size: 0.95rem;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    .switch {
-      position: relative;
-      display: inline-block;
-      width: 48px;
-      height: 26px;
-    }
-
+    .switch { position: relative; display: inline-block; width: 48px; height: 26px; }
     .switch input { opacity: 0; width: 0; height: 0; }
-
-    .slider {
-      position: absolute;
-      cursor: pointer;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background-color: rgba(0,0,0,0.3);
-      transition: .3s;
-      border-radius: 26px;
-    }
-
-    .slider:before {
-      position: absolute;
-      content: "";
-      height: 20px; width: 20px;
-      left: 3px; bottom: 3px;
-      background-color: white;
-      transition: .3s;
-      border-radius: 50%;
-    }
-
+    .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0,0,0,0.3); transition: .3s; border-radius: 26px; }
+    .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 3px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%; }
     input:checked + .slider { background-color: #10b981; }
     input:checked + .slider:before { transform: translateX(22px); }
 
-    .daily-content {
-      padding: 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 28px;
-    }
+    .daily-content { padding: 24px; display: flex; flex-direction: column; gap: 28px; }
 
-    .section-title {
-      font-size: 1.1rem;
-      font-weight: 800;
-      color: #1e3a8a;
-      margin-bottom: 14px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      border-bottom: 2px solid var(--border);
-      padding-bottom: 8px;
-    }
+    .section-title { font-size: 1.1rem; font-weight: 800; color: #1e3a8a; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; border-bottom: 2px solid var(--border); padding-bottom: 8px; }
 
-    /* Operations Table */
-    .ops-table {
-      width: 100%;
-      border-collapse: separate;
-      border-spacing: 0;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      overflow: hidden;
-    }
-
-    .ops-table th {
-      background: #f1f5f9;
-      color: #334155;
-      padding: 12px 14px;
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      border-bottom: 1px solid var(--border);
-      border-right: none;
-    }
-
-    .ops-table td {
-      padding: 14px;
-      border-bottom: 1px solid var(--border);
-      border-right: none;
-      text-align: left;
-      height: auto;
-      vertical-align: middle;
-    }
-
+    .ops-table { width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+    .ops-table th { background: #f1f5f9; color: #334155; padding: 12px 14px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid var(--border); }
+    .ops-table td { padding: 14px; border-bottom: 1px solid var(--border); text-align: left; vertical-align: middle; }
     .ops-table tr:last-child td { border-bottom: none; }
 
-    .staff-station-cell {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
+    .staff-station-cell { display: flex; flex-direction: column; gap: 2px; }
     .staff-station-cell .s-name { font-weight: 700; font-size: 1rem; color: var(--text-main); }
-    .staff-station-cell .s-role { font-size: 0.8rem; color: var(--text-muted); }
+    .staff-station-cell .s-role { font-size: 0.82rem; color: var(--text-muted); font-weight: 500; }
 
-    .att-select {
-      padding: 6px 12px;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 0.85rem;
-      border: 2px solid var(--border);
-      outline: none;
-      cursor: pointer;
-    }
-
+    .att-select { padding: 6px 12px; border-radius: 8px; font-weight: 700; font-size: 0.85rem; border: 2px solid var(--border); outline: none; cursor: pointer; }
     .att-Present { background: #d1fae5; color: #065f46; border-color: #a7f3d0; }
     .att-Late { background: #fef3c7; color: #92400e; border-color: #fde68a; }
     .att-Absent { background: #ffe4e6; color: #9f1239; border-color: #fecdd3; }
     .att-Leave { background: #e0f2fe; color: #0369a1; border-color: #bae6fd; }
 
-    .time-inputs {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
+    .time-inputs { display: flex; align-items: center; gap: 6px; }
+    .time-inputs input { width: 85px; padding: 6px 8px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.85rem; text-align: center; font-weight: 600; }
 
-    .time-inputs input {
-      width: 85px;
-      padding: 6px 8px;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      font-size: 0.85rem;
-      text-align: center;
-      font-weight: 600;
-    }
-
-    /* Deep Cleaning Box */
-    .cleaning-checklist-box {
-      background: #f0fdf4;
-      border: 2px solid #86efac;
-      border-radius: 16px;
-      padding: 20px;
-      display: none;
-    }
-
-    .cleaning-checklist-box.show {
-      display: block;
-      animation: fadeIn 0.3s ease;
-    }
-
+    .cleaning-checklist-box { background: #f0fdf4; border: 2px solid #86efac; border-radius: 16px; padding: 20px; display: none; }
+    .cleaning-checklist-box.show { display: block; animation: fadeIn 0.3s ease; }
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-    .clean-task-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 12px;
-      margin-top: 14px;
-    }
-
-    .clean-task-item {
-      background: white;
-      padding: 14px;
-      border-radius: 10px;
-      border: 1px solid #bbf7d0;
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
+    .clean-task-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin-top: 14px; }
+    .clean-task-item { background: white; padding: 14px; border-radius: 10px; border: 1px solid #bbf7d0; display: flex; align-items: flex-start; gap: 12px; cursor: pointer; transition: all 0.2s; }
     .clean-task-item:hover { box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
     .clean-task-item.checked { background: #dcfce7; opacity: 0.75; text-decoration: line-through; }
-
-    .clean-task-item input[type="checkbox"] {
-      width: 20px; height: 20px;
-      margin-top: 2px;
-      accent-color: #16a34a;
-      cursor: pointer;
-    }
-
+    .clean-task-item input[type="checkbox"] { width: 20px; height: 20px; margin-top: 2px; accent-color: #16a34a; cursor: pointer; }
     .task-desc { font-size: 0.88rem; color: #166534; }
     .task-station { font-weight: 800; font-size: 0.95rem; color: #14532d; display: block; }
 
-    /* Notes Box */
-    .notes-area {
+    .notes-area { width: 100%; height: 80px; padding: 12px; border: 2px solid var(--border); border-radius: 10px; font-size: 0.95rem; outline: none; resize: vertical; }
+    .notes-area:focus { border-color: var(--primary); }
+
+    /* Live WhatsApp Preview Card */
+    .whatsapp-preview-box {
+      background: #0f172a;
+      border-radius: 16px;
+      padding: 24px;
+      color: #f8fafc;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.2);
+    }
+
+    .whatsapp-preview-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #334155;
+      padding-bottom: 12px;
+    }
+
+    .whatsapp-preview-header h4 {
+      font-size: 1.1rem;
+      color: #38bdf8;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .whatsapp-preview-box textarea {
       width: 100%;
-      height: 90px;
-      padding: 12px;
-      border: 2px solid var(--border);
+      height: 360px;
+      background: #1e293b;
+      color: #e2e8f0;
+      border: 1px solid #475569;
       border-radius: 10px;
-      font-size: 0.95rem;
+      padding: 16px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.92rem;
+      line-height: 1.6;
       outline: none;
       resize: vertical;
     }
 
-    .notes-area:focus { border-color: var(--primary); }
-
-    .daily-footer {
-      padding: 20px 24px;
-      background: #f8fafc;
-      border-top: 1px solid var(--border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .btn-whatsapp {
+    .btn-whatsapp-big {
       background: #25d366;
       color: white;
       border: none;
-      padding: 12px 24px;
-      border-radius: 10px;
-      font-weight: 700;
-      font-size: 1rem;
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 1.05rem;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 8px;
-      transition: background 0.2s;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.2s;
+      box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
     }
 
-    .btn-whatsapp:hover { background: #16a34a; }
-
-    .btn-print {
-      background: #475569;
-      color: white;
-      border: none;
-      padding: 12px 24px;
-      border-radius: 10px;
-      font-weight: 700;
-      font-size: 1rem;
-      cursor: pointer;
+    .btn-whatsapp-big:hover {
+      background: #16a34a;
+      transform: translateY(-1px);
     }
 
-    /* Modal & Toast */
-    .modal-overlay {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px);
-      display: none; align-items: center; justify-content: center; z-index: 2000; padding: 20px;
-    }
-
-    .modal-overlay.show { display: flex; }
-
-    .modal-card {
-      background: white; border-radius: 16px; max-width: 540px; width: 100%;
-      padding: 24px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); display: flex; flex-direction: column; gap: 16px;
-    }
-
-    .modal-card h3 { color: var(--primary); display: flex; align-items: center; gap: 8px; }
-
-    .modal-card textarea {
-      width: 100%; height: 260px; padding: 12px; border-radius: 8px;
-      border: 2px solid var(--border); font-family: monospace; font-size: 0.88rem; resize: vertical; outline: none;
-    }
-
-    .modal-actions { display: flex; justify-content: flex-end; gap: 12px; }
-
-    .btn-close { background: #e2e8f0; color: #0f172a; border: none; padding: 10px 18px; border-radius: 8px; font-weight: 600; cursor: pointer; }
-
-    .toast {
-      position: fixed; bottom: 24px; right: 24px; background: #0f172a; color: white;
-      padding: 14px 24px; border-radius: 12px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3);
-      display: flex; align-items: center; gap: 12px; z-index: 1000; opacity: 0; transform: translateY(20px); transition: all 0.3s; pointer-events: none;
-    }
-
+    .toast { position: fixed; bottom: 24px; right: 24px; background: #0f172a; color: white; padding: 14px 24px; border-radius: 12px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3); display: flex; align-items: center; gap: 12px; z-index: 1000; opacity: 0; transform: translateY(20px); transition: all 0.3s; pointer-events: none; }
     .toast.show { opacity: 1; transform: translateY(0); }
 
-    /* Rules Banner */
     .rules-banner { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 12px; padding: 16px; margin-bottom: 20px; color: #1e3a8a; font-size: 0.9rem; }
     .rules-banner ul { margin-top: 8px; margin-left: 20px; }
 
     @media print {
       body { padding: 0; background: white; }
-      header, .tabs, .controls-bar, .legend, .rules-banner, .btn-whatsapp, .btn-print, .quick-dates, .modal-overlay, .cleaning-toggle-box { display: none !important; }
+      header, .tabs, .controls-bar, .legend, .rules-banner, .btn-whatsapp-big, .quick-dates, .cleaning-toggle-box, .whatsapp-preview-box { display: none !important; }
       .daily-container { display: block; }
       .date-picker-card { display: none; }
       .daily-card { box-shadow: none; border: none; }
@@ -751,8 +390,8 @@
 
   <header>
     <div>
-      <h1>📋 Restaurant Operations Command Center</h1>
-      <p>Roster, Attendance, Food Stations (Chinese/Tandoor/Ramen/Sushi) & Deep Cleaning</p>
+      <h1>🥡 INDUS WOK — Night Operations Center</h1>
+      <p>4:00 PM – 4:00 AM Roster | Chinese, Tandoor/Sushi/Ramen & Helpers Register</p>
     </div>
     <div class="controls-bar">
       <label for="monthSelect">Month:</label>
@@ -768,47 +407,41 @@
   </header>
 
   <div class="rules-banner">
-    <strong>🛡️ Active Kitchen Command Rules & Stations:</strong>
+    <strong>🛡️ Active Indus Wok Operations & Management Rules:</strong>
     <ul>
-      <li><strong>Food Stations:</strong> Jannat (🥡 Chinese Wok), Dilip (🔥 Tandoor), Dev (🍣 Sushi & Ramen Prep), Amit (🍜 Ramen Assembly), Nafeez (🍽️ Waiter/POS).</li>
-      <li><strong>Joining Dates:</strong> Dilip (12 June), Dev (17 June), Amit (25 June). Days before joining show as <strong>NJ</strong>.</li>
-      <li><strong>Deep Cleaning Day:</strong> Toggle the switch on the Daily View to reveal station degreasing & sanitization checklists.</li>
-      <li><strong>Attendance Tracker:</strong> Mark live arrival status (Present, Late, Absent) and sign-in/out hours directly on the Daily Log.</li>
+      <li><strong>Duty Timings:</strong> 4:00 PM Check-in Sharp. Operating shift is strictly <strong>4:00 PM to 4:00 AM</strong>.</li>
+      <li><strong>Kitchen Stations:</strong> Jannat (Chef 1 Chinese), Dilip (Chef 2 Tandoor/Sushi/Ramen), Dev & Amit (Mori/Helper & Cleaning), Nafeez (FOH Waiter).</li>
+      <li><strong>Dynamic FOH Cover:</strong> When Nafeez is on approved leave, Dev or Amit is automatically designated as FOH covering staff.</li>
+      <li><strong>Live WhatsApp Generator:</strong> The exact executive Indus Wok daily report is formatted automatically in real-time below!</li>
     </ul>
   </div>
 
   <!-- Tabs Navigation -->
   <div class="tabs">
     <button class="tab-btn active" onclick="switchTab('monthly')">📅 Monthly Roster Board</button>
-    <button class="tab-btn" onclick="switchTab('daily')">📝 Daily Attendance, Stations & Cleaning Log</button>
+    <button class="tab-btn" onclick="switchTab('daily')">📋 Daily Roster Log & Live WhatsApp Generator</button>
   </div>
 
   <!-- MONTHLY TAB -->
   <div id="monthlyTab" class="tab-content active">
-    
     <div class="summary-grid" id="summaryGrid"></div>
-
     <div class="table-container">
       <table id="rosterTable">
         <thead>
-          <tr id="tableHeaderRow">
-            <th class="sticky-col">Staff Member</th>
-          </tr>
+          <tr id="tableHeaderRow"><th class="sticky-col">Staff Member</th></tr>
         </thead>
         <tbody id="tableBody"></tbody>
       </table>
     </div>
-
     <div class="legend">
       <span style="font-weight:700; color:var(--text-muted);">Legend:</span>
-      <div class="legend-item"><div class="legend-box st-W">W</div> Present (Full Day)</div>
+      <div class="legend-item"><div class="legend-box st-W">W</div> On Duty (4PM-4AM)</div>
       <div class="legend-item"><div class="legend-box st-L">L</div> Leave (Off)</div>
-      <div class="legend-item"><div class="legend-box st-M">M</div> Morning Shift</div>
-      <div class="legend-item"><div class="legend-box st-E">E</div> Evening Shift</div>
-      <div class="legend-item"><div class="legend-box st-H">H</div> Half Day</div>
-      <div class="legend-item"><div class="legend-box st-NJ">NJ</div> Not Joined Yet</div>
+      <div class="legend-item"><div class="legend-box st-M">M</div> Early Shift (4PM-10PM)</div>
+      <div class="legend-item"><div class="legend-box st-E">E</div> Late Shift (10PM-4AM)</div>
+      <div class="legend-item"><div class="legend-box st-H">H</div> Half Shift</div>
+      <div class="legend-item"><div class="legend-box st-NJ">NJ</div> Not Joined</div>
     </div>
-
   </div>
 
   <!-- DAILY TAB -->
@@ -817,19 +450,18 @@
       
       <!-- Left Date Picker -->
       <div class="date-picker-card">
-        <h3>🔍 Select Daily Operations</h3>
+        <h3>🔍 Select Roster Date</h3>
         <input type="date" id="dailyDateInput" onchange="renderDailyView()">
-        
         <h4 style="font-size:0.85rem; color:var(--text-muted); margin-bottom:8px; text-transform:uppercase;">Quick Jump:</h4>
         <div class="quick-dates" id="quickDatesContainer"></div>
       </div>
 
-      <!-- Daily Log Card -->
+      <!-- Daily Operations Center -->
       <div class="daily-card">
         <div class="daily-card-header">
           <div>
-            <h2 id="dailyTitle">Daily Operations Log</h2>
-            <p id="dailySubtitle" style="color:#bfdbfe; font-size:0.95rem;">Loading stations & attendance...</p>
+            <h2 id="dailyTitle">Daily Roster Log</h2>
+            <p id="dailySubtitle" style="color:#bfdbfe; font-size:0.95rem;">Indus Wok Attendance & Station Tracking</p>
           </div>
           
           <div class="cleaning-toggle-box">
@@ -843,65 +475,55 @@
 
         <div class="daily-content">
           
-          <!-- Section 1: Stations & Attendance -->
+          <!-- Section 1: Attendance Table -->
           <div>
-            <div class="section-title">👨‍🍳 Station Schedule & Live Attendance</div>
+            <div class="section-title">👨‍🍳 Staff Register & Check-In Tracking</div>
             <table class="ops-table">
               <thead>
                 <tr>
-                  <th>Staff & Station</th>
-                  <th>Roster Shift</th>
-                  <th>Attendance Status</th>
-                  <th>Sign-In / Sign-Out</th>
+                  <th>Staff & Primary Role</th>
+                  <th>Roster Status</th>
+                  <th>Register Status</th>
+                  <th>Check-In / Check-Out (4PM-4AM)</th>
                 </tr>
               </thead>
               <tbody id="dailyOpsBody"></tbody>
             </table>
           </div>
 
-          <!-- Section 2: Deep Cleaning Checklist -->
+          <!-- Section 2: Deep Cleaning Box -->
           <div class="cleaning-checklist-box" id="cleaningBox">
             <div class="section-title" style="color:#15803d; border-color:#86efac;">
-              🧹 Kitchen Deep Cleaning Station Protocols
+              🧹 Kitchen & Scullery Deep Cleaning Protocols
             </div>
             <p style="font-size:0.85rem; color:#166534;">Check off each deep degreasing and sanitization task upon completion:</p>
-            
-            <div class="clean-task-grid" id="cleanTaskGrid">
-              <!-- Injected by JS -->
-            </div>
+            <div class="clean-task-grid" id="cleanTaskGrid"></div>
           </div>
 
-          <!-- Section 3: Daily Manager Notes -->
+          <!-- Section 3: Custom Operational Updates -->
           <div>
-            <div class="section-title">📝 Daily Handover / Kitchen Stock Notes</div>
-            <textarea class="notes-area" id="dailyNotesInput" placeholder="Enter stock shortages, order reminders, or equipment repairs (e.g. Need more Nori sheets & Tandoori masala)..." oninput="saveDailyState()"></textarea>
+            <div class="section-title">📢 Custom Management / Operational Updates</div>
+            <textarea class="notes-area" id="dailyNotesInput" placeholder="Enter special stock requests, VIP catering notes, or station instructions..." oninput="updateLivePreview()"></textarea>
+          </div>
+
+          <!-- Section 4: Live WhatsApp Output Box -->
+          <div class="whatsapp-preview-box">
+            <div class="whatsapp-preview-header">
+              <h4>💬 Live WhatsApp Daily Roster Output (Indus Wok Format)</h4>
+              <span style="font-size:0.8rem; background:#334155; padding:4px 10px; border-radius:20px;">Auto-Generated</span>
+            </div>
+            <p style="font-size:0.88rem; color:#94a3b8;">This exact report updates in real-time as you mark attendance above. You can also edit the text freely inside the box before sending:</p>
+            
+            <textarea id="liveWaTextArea"></textarea>
+
+            <button class="btn-whatsapp-big" onclick="copyLiveText()">
+              💬 COPY EXACT ROSTER FOR WHATSAPP
+            </button>
           </div>
 
         </div>
-
-        <div class="daily-footer">
-          <button class="btn-whatsapp" onclick="showWhatsAppModal()">
-            💬 Copy Daily Operations Report for WhatsApp
-          </button>
-          <button class="btn-print" onclick="window.print()">
-            🖨️ Print Daily Log Sheet
-          </button>
-        </div>
       </div>
 
-    </div>
-  </div>
-
-  <!-- WhatsApp Modal -->
-  <div class="modal-overlay" id="waModal">
-    <div class="modal-card">
-      <h3>💬 Share Daily WhatsApp Operations Report</h3>
-      <p style="font-size:0.85rem; color:var(--text-muted);">Copy the comprehensive report below and paste it directly into your staff group chat:</p>
-      <textarea id="waTextArea" readonly></textarea>
-      <div class="modal-actions">
-        <button class="btn-close" onclick="closeModal()">Close</button>
-        <button class="btn-action" onclick="copyModalText()">📋 Select All & Copy</button>
-      </div>
     </div>
   </div>
 
@@ -911,47 +533,37 @@
   </div>
 
   <script>
-    // Staff & Station Definition
+    // Staff Definition
     const staffList = [
-      { id: 1, name: "Jannat", role: "Chef 1", dept: "Kitchen", station: "🥡 Chinese (Wok & Pans)", icon: "👨‍🍳", joinDate: "2026-01-01", joinText: "Existing Staff", hours: "11:00 AM – 11:00 PM" },
-      { id: 2, name: "Dilip", role: "Chef 2", dept: "Kitchen", station: "🔥 Tandoor & Clay Oven", icon: "👨‍🍳", joinDate: "2026-06-12", joinText: "Joined: 12 June", hours: "11:00 AM – 11:00 PM" },
-      { id: 3, name: "Dev", role: "Mori Wala 1", dept: "Kitchen", station: "🍣 Sushi Bar & Ramen Prep", icon: "🫧", joinDate: "2026-06-17", joinText: "Joined: 17 June", hours: "11:00 AM – 11:00 PM" },
-      { id: 4, name: "Amit", role: "Mori Wala 2", dept: "Kitchen", station: "🍜 Ramen Assembly & Scullery", icon: "🫧", joinDate: "2026-06-25", joinText: "Joined: 25 June", hours: "11:00 AM – 11:00 PM" },
-      { id: 5, name: "Nafeez", role: "Waiter", dept: "Service", station: "🍽️ FOH Dining & Packing", icon: "🍽️", joinDate: "2026-01-01", joinText: "Existing Staff", hours: "11:00 AM – 11:00 PM" }
+      { id: 1, name: "Jannat", role: "Chef 1", station: "🥡 Chinese Chef (Wok & Pan)", icon: "👨‍🍳", joinDate: "2026-01-01", joinText: "Existing Staff", hours: "4:00 PM – 4:00 AM" },
+      { id: 2, name: "Dilip", role: "Chef 2 / Tandoor", station: "🔥🍣 Tandoor / Sushi / Ramen Chef", icon: "👨‍🍳", joinDate: "2026-06-12", joinText: "Joined: 12 June", hours: "4:00 PM – 4:00 AM" },
+      { id: 3, name: "Dev", role: "Helper / FOH", station: "🫧 Helper (Dishwashing & Kitchen Cleaning)", icon: "🫧", joinDate: "2026-06-17", joinText: "Joined: 17 June", hours: "4:00 PM – 4:00 AM" },
+      { id: 4, name: "Amit", role: "Mori / Helper", station: "🫧 Helper (Dishwashing & Kitchen Cleaning)", icon: "🫧", joinDate: "2026-06-25", joinText: "Joined: 25 June", hours: "4:00 PM – 4:00 AM" },
+      { id: 5, name: "Nafeez", role: "FOH Waiter", station: "🍽️ FOH Waiter (Service, POS & Packing)", icon: "🍽️", joinDate: "2026-01-01", joinText: "Existing Staff", hours: "4:00 PM – 4:00 AM" }
     ];
 
     const cleaningTasks = [
-      { id: "c1", station: "🥡 Chinese Station (Jannat)", task: "Degrease wok range hoods, boil high-pressure burners, scrub grease traps." },
-      { id: "c2", station: "🔥 Tandoor Station (Dilip)", task: "Scrape burnt marinade from iron skewers, remove bottom oven ash, polish stainless lid." },
-      { id: "c3", station: "🍣 Sushi & Ramen Prep (Dev)", task: "Sanitize raw fish fridge ~2°C, bleach bamboo mats, descale noodle boiling strainers." },
-      { id: "c4", station: "🫧 Scullery & Mori Drains (Amit)", task: "Scrub floor drains with caustic soda, empty fat grease traps, sanitize scrubbing pads." },
-      { id: "c5", station: "🍽️ Dining Area & POS (Nafeez)", task: "Deep scrub dining tables, wipe soy/chili condiment jars, polish glass entrance doors." }
+      { id: "c1", station: "🥡 Chinese Wok Range (Jannat)", task: "Degrease exhaust hood filters, boil wok burners in caustic solution, scrub Chinese grease traps." },
+      { id: "c2", station: "🔥🍣 Tandoor/Sushi/Ramen Bar (Dilip)", task: "Scrape burnt marinades off iron skewers & ash out clay oven, sanitize sushi raw fish fridge ~2°C." },
+      { id: "c3", station: "🫧 Dishwashing & Mori Sink 1 (Dev)", task: "Scrub dishwashing floor with degreaser, bleach drain grates, sanitize scrubbing brushes & sink traps." },
+      { id: "c4", station: "🧹 Kitchen Walls & Storage (Amit)", task: "Degrease stainless steel prep tables, empty main kitchen grease interceptors, wipe walk-in fridge doors." },
+      { id: "c5", station: "🍽️ Dining Area & POS (Nafeez)", task: "Deep scrub FOH dining tables, polish front entrance doors, wipe condiment jars & POS printer." }
     ];
 
-    const months = [
-      "January", "February", "March", "April", "May", "June",
-      "July", "August", "September", "October", "November", "December"
-    ];
-
-    const statusLabels = {
-      "W": "Full Day (Present)", "L": "Leave (Off)", "M": "Morning Shift", "E": "Evening Shift", "H": "Half Day", "NJ": "Not Joined"
-    };
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const statusLabels = { "W": "On Duty (4PM-4AM)", "L": "Leave (Off)", "M": "Early (4PM-10PM)", "E": "Late (10PM-4AM)", "H": "Half Shift", "NJ": "Not Joined" };
 
     let rosterData = {};
-    // dailyState[dateStr] = { attendance: { id: { status: 'Present', inTime: '11:00 AM', outTime: '11:00 PM' } }, isCleaning: false, checkedTasks: [], notes: '' }
     let dailyState = {};
-
     let currentYear = 2026;
     let currentMonth = 5; // June 2026
 
     function init() {
-      const now = new Date(2026, 5, 25);
-      currentYear = now.getFullYear();
-      currentMonth = now.getMonth();
+      const now = new Date(2026, 5, 26); // Default to Friday 26 June 2026
+      currentYear = now.getFullYear(); currentMonth = now.getMonth();
 
-      // Load saved state from memory
       try {
-        const saved = localStorage.getItem("restaurant_daily_state");
+        const saved = localStorage.getItem("indus_wok_state_v3");
         if (saved) dailyState = JSON.parse(saved);
       } catch (e) {}
 
@@ -1142,17 +754,17 @@
     function initDailyDatePicker() {
       const dateInput = document.getElementById("dailyDateInput");
       const mm = String(currentMonth + 1).padStart(2, '0');
-      dateInput.value = `${currentYear}-${mm}-25`;
+      dateInput.value = `${currentYear}-${mm}-26`; // Default Friday 26 June
 
       const container = document.getElementById("quickDatesContainer"); container.innerHTML = "";
       const numDays = getDaysInMonth(currentYear, currentMonth);
       const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-      [1, 12, 17, 25, numDays].forEach(d => {
+      [1, 12, 17, 26, numDays].forEach(d => {
         if (d > numDays) return;
         const dow = new Date(currentYear, currentMonth, d).getDay();
         const dateStr = `${currentYear}-${mm}-${String(d).padStart(2, '0')}`;
-        let note = d === 12 ? " (Dilip Joins)" : (d === 17 ? " (Dev Joins)" : (d === 25 ? " (Amit Joins)" : ""));
+        let note = d === 12 ? " (Dilip Joins)" : (d === 17 ? " (Dev Joins)" : (d === 26 ? " (Sample Roster)" : ""));
         
         container.innerHTML += `
           <button class="quick-date-btn" onclick="document.getElementById('dailyDateInput').value='${dateStr}'; renderDailyView();">
@@ -1169,20 +781,19 @@
       const dt = new Date(y, m - 1, d);
       const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
       document.getElementById("dailyTitle").textContent = `${dayNames[dt.getDay()]}, ${d} ${months[m-1]} ${y}`;
-      document.getElementById("dailySubtitle").textContent = `Station Operations & Attendance Command`;
+      document.getElementById("dailySubtitle").textContent = `Indus Wok Operations & Check-In Log`;
 
-      if (!rosterData[y] || !rosterData[y][m-1]) { autoGenerateSchedule(true); }
+      if (!rosterData[y] || !rosterData[y][m-1]) autoGenerateSchedule(true);
       const mData = rosterData[y][m-1];
 
-      // Initialize state for this day if missing
       if (!dailyState[dateVal]) {
         let att = {};
         staffList.forEach(s => {
           const st = mData[s.id][d] || "W";
           att[s.id] = {
             status: st === "L" ? "Leave" : (st === "NJ" ? "Not Joined" : "Present"),
-            inTime: st === "M" ? "11:00 AM" : (st === "E" ? "06:00 PM" : "11:00 AM"),
-            outTime: st === "M" ? "04:00 PM" : "11:00 PM"
+            inTime: st === "M" ? "04:00 PM" : (st === "E" ? "10:00 PM" : "04:00 PM"),
+            outTime: st === "M" ? "10:00 PM" : "04:00 AM"
           };
         });
         dailyState[dateVal] = { attendance: att, isCleaning: dt.getDay() === 2, checkedTasks: [], notes: "" };
@@ -1193,14 +804,13 @@
       document.getElementById("cleaningBox").classList.toggle("show", stObj.isCleaning);
       document.getElementById("dailyNotesInput").value = stObj.notes || "";
 
-      // Render Stations & Attendance
       const tbody = document.getElementById("dailyOpsBody"); tbody.innerHTML = "";
       staffList.forEach(s => {
         const rosterSt = mData[s.id][d] || "W";
-        if (rosterSt === "NJ") return; // Omit pre-employment
+        if (rosterSt === "NJ") return;
 
-        const curAtt = stObj.attendance[s.id] || { status: "Present", inTime: "11:00 AM", outTime: "11:00 PM" };
-        const shiftText = rosterSt === "W" ? `Full Day (${s.hours})` : statusLabels[rosterSt];
+        const curAtt = stObj.attendance[s.id] || { status: "Present", inTime: "04:00 PM", outTime: "04:00 AM" };
+        const shiftText = rosterSt === "W" ? `Full Duty (${s.hours})` : statusLabels[rosterSt];
 
         tbody.innerHTML += `
           <tr>
@@ -1213,10 +823,10 @@
             <td><span style="font-weight:700; color:#475569; font-size:0.88rem;">${shiftText}</span></td>
             <td>
               <select class="att-select att-${curAtt.status}" onchange="updateAttendance(${s.id}, 'status', this.value)">
-                <option value="Present" ${curAtt.status==='Present'?'selected':''}>✅ Present (On Duty)</option>
-                <option value="Late" ${curAtt.status==='Late'?'selected':''}>⏱️ Late Arrived</option>
+                <option value="Present" ${curAtt.status==='Present'?'selected':''}>✅ Present (On Time)</option>
+                <option value="Late" ${curAtt.status==='Late'?'selected':''}>⏱️ Late Checked-in</option>
                 <option value="Leave" ${curAtt.status==='Leave'?'selected':''}>🏖️ Approved Leave</option>
-                <option value="Absent" ${curAtt.status==='Absent'?'selected':''}>❌ Absent (Unexcused)</option>
+                <option value="Absent" ${curAtt.status==='Absent'?'selected':''}>❌ Unexcused Absent</option>
               </select>
             </td>
             <td>
@@ -1230,7 +840,6 @@
         `;
       });
 
-      // Render Cleaning Tasks
       const grid = document.getElementById("cleanTaskGrid"); grid.innerHTML = "";
       cleaningTasks.forEach(ct => {
         const isChecked = stObj.checkedTasks.includes(ct.id);
@@ -1244,24 +853,24 @@
           </label>
         `;
       });
+
+      updateLivePreview();
     }
 
-    function updateAttendance(staffId, field, val) {
+    function updateAttendance(id, field, val) {
       const dateVal = document.getElementById("dailyDateInput").value;
       if (!dailyState[dateVal]) return;
-      if (!dailyState[dateVal].attendance[staffId]) dailyState[dateVal].attendance[staffId] = {};
-      dailyState[dateVal].attendance[staffId][field] = val;
-      saveDailyState();
-      renderDailyView();
+      if (!dailyState[dateVal].attendance[id]) dailyState[dateVal].attendance[id] = {};
+      dailyState[dateVal].attendance[id][field] = val;
+      saveDailyState(); renderDailyView();
     }
 
     function toggleCleaningDay() {
       const dateVal = document.getElementById("dailyDateInput").value;
       if (!dailyState[dateVal]) return;
       dailyState[dateVal].isCleaning = document.getElementById("cleanSwitch").checked;
-      saveDailyState();
-      renderDailyView();
-      showToast(dailyState[dateVal].isCleaning ? "🧹 Deep Cleaning Protocols Activated!" : "Regular Service Mode Restored.");
+      saveDailyState(); renderDailyView();
+      showToast(dailyState[dateVal].isCleaning ? "🧹 Deep Cleaning Protocols Activated!" : "Regular Service Restored.");
     }
 
     function toggleCleanTask(taskId) {
@@ -1270,103 +879,139 @@
       let tasks = dailyState[dateVal].checkedTasks;
       if (tasks.includes(taskId)) dailyState[dateVal].checkedTasks = tasks.filter(t => t !== taskId);
       else dailyState[dateVal].checkedTasks.push(taskId);
-      saveDailyState();
-      renderDailyView();
+      saveDailyState(); renderDailyView();
     }
 
     function saveDailyState() {
       const dateVal = document.getElementById("dailyDateInput").value;
-      if (dailyState[dateVal]) {
-        dailyState[dateVal].notes = document.getElementById("dailyNotesInput").value;
-      }
-      try {
-        localStorage.setItem("restaurant_daily_state", JSON.stringify(dailyState));
-      } catch (e) {}
+      if (dailyState[dateVal]) dailyState[dateVal].notes = document.getElementById("dailyNotesInput").value;
+      try { localStorage.setItem("indus_wok_state_v3", JSON.stringify(dailyState)); } catch (e) {}
     }
 
-    function getFormattedWhatsAppText() {
+    // Exact Executive Indus Wok WhatsApp Formatting
+    function generateIndusWokReport() {
       const dateVal = document.getElementById("dailyDateInput").value;
       if (!dateVal || !dailyState[dateVal]) return "";
       const [y, m, d] = dateVal.split("-").map(Number);
       const dt = new Date(y, m - 1, d);
       const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
       const stObj = dailyState[dateVal];
+      const mData = rosterData[y][m-1];
 
-      let msg = `📅 *RESTAURANT DAILY OPERATIONS REPORT*\n`;
-      msg += `📆 *Date:* ${dayNames[dt.getDay()]}, ${d} ${months[m-1]} ${y}\n`;
-      msg += `🧹 *Mode:* ${stObj.isCleaning ? '🧹 Deep Cleaning Day & Service' : '🍽️ Regular Service Mode'}\n\n`;
+      let msg = `📋 INDUS WOK – DAILY STAFF ROSTER \n`;
+      msg += `📅 Date: ${dayNames[dt.getDay()]}, ${d} ${months[m-1]} ${y} \n`;
+      msg += `🕓 Reporting Time (Check-in): 4:00 PM Sharp \n`;
+      msg += `⏰ Duty Hours: 4:00 PM – 4:00 AM \n\n`;
 
-      let workingList = [];
+      let dutyList = [];
       let leaveList = [];
 
-      staffList.forEach(s => {
-        const att = stObj.attendance[s.id];
-        if (!att || att.status === "Not Joined") return;
+      // Check dynamic FOH cover
+      const nafeezAtt = stObj.attendance[5] || { status: "Present" };
+      const nafeezOff = (nafeezAtt.status === "Leave" || nafeezAtt.status === "Absent" || mData[5][d] === "L");
 
-        if (att.status === "Leave" || att.status === "Absent") {
-          leaveList.push(`❌ *${s.name}* [${s.role}] — (${att.status})`);
+      staffList.forEach(s => {
+        const rosterSt = mData[s.id][d] || "W";
+        if (rosterSt === "NJ") return; // Omit pre-joining
+
+        const att = stObj.attendance[s.id] || { status: "Present", inTime: "04:00 PM" };
+
+        if (att.status === "Leave" || att.status === "Absent" || rosterSt === "L") {
+          let icon = att.status === "Absent" ? "🔴" : "🟡";
+          let stLabel = att.status === "Absent" ? "Absent" : "Approved Leave";
+          let roleTag = s.id === 5 ? "FOH" : (s.id === 1 ? "Chef 1" : (s.id === 2 ? "Tandoor" : "Helper"));
+          leaveList.push(`${icon} ${s.name} – ${roleTag} (${stLabel})`);
         } else {
-          let icon = att.status === "Present" ? "✅" : "⏱️ LATE";
-          workingList.push(`${icon} *${s.name}* [${s.station.split(" ")[1] || s.station}] (${att.inTime} – ${att.outTime})`);
+          let icon = att.status === "Late" ? "⚠️" : "✅";
+          let roleTitle = "";
+          if (s.id === 1) roleTitle = "Chef 1";
+          else if (s.id === 2) roleTitle = "Tandoor / Sushi / Ramen";
+          else if (s.id === 3) roleTitle = nafeezOff ? "Helper / FOH (Covering)" : "Helper 1";
+          else if (s.id === 4) roleTitle = (nafeezOff && mData[3][d]==="L") ? "Helper / FOH (Covering)" : "Mori / Helper";
+          else if (s.id === 5) roleTitle = "FOH";
+
+          let lateNote = att.status === "Late" ? ` (Late Checked-in ${att.inTime})` : "";
+          dutyList.push(`${icon} ${s.name} – ${roleTitle}${lateNote}`);
         }
       });
 
-      msg += `👨‍🍳 *ON DUTY STATIONS & ATTENDANCE:*\n`;
-      workingList.forEach(w => msg += `▫️ ${w}\n`);
+      msg += `👨‍🍳 Staff on Duty \n`;
+      dutyList.forEach(item => msg += `${item} \n`);
 
-      msg += `\n🏖️ *ON LEAVE / ABSENT:*\n`;
-      if (leaveList.length === 0) msg += `▫️ None (All Active Staff Working)\n`;
-      else leaveList.forEach(l => msg += `▫️ ${l}\n`);
+      msg += `\n🏖️ Approved Leave / Absent \n`;
+      if (leaveList.length === 0) msg += `▫️ None (Full Active Team On Duty) \n`;
+      else leaveList.forEach(l => msg += `${l} \n`);
+
+      msg += `\n📢 Management Instructions \n`;
+      msg += `⚠️ This is a strict instruction for all staff. Every team member must report by 4:00 PM sharp. Anyone arriving after 4:00 PM will be marked as Late Arrived in the attendance register. No exceptions. \n`;
+
+      if (nafeezOff) {
+        let coverName = mData[3][d]==="L" ? "Amit" : "Dev";
+        msg += `🔹 Operational Update: ${coverName} will handle FOH responsibilities today in place of Nafeez while continuing to assist with helper duties as required. \n`;
+      }
 
       if (stObj.isCleaning) {
-        msg += `\n🧹 *DEEP CLEANING PROTOCOLS:*\n`;
-        cleaningTasks.forEach(ct => {
-          let box = stObj.checkedTasks.includes(ct.id) ? "☑️ [CLEANED]" : "☐ [PENDING]";
-          msg += `${box} ${ct.station.split(" ")[1]}\n`;
-        });
+        msg += `🔹 Deep Cleaning Protocol: Today is scheduled Kitchen Deep Cleaning. Ensure station degreasing checklists are signed off before check-out. \n`;
       }
 
       if (stObj.notes && stObj.notes.trim() !== "") {
-        msg += `\n📝 *MANAGER HANDOVER NOTES:*\n_${stObj.notes.trim()}_\n`;
+        msg += `🔹 Special Note: ${stObj.notes.trim()} \n`;
       }
 
-      msg += `\n_Report generated via Command Center_`;
+      msg += `Thank you for your cooperation. Let's maintain punctuality, discipline, and teamwork throughout the shift. \n\n`;
+      msg += `— Management | Indus Wok`;
+
       return msg;
     }
 
-    function showWhatsAppModal() {
-      const txt = getFormattedWhatsAppText();
-      const modal = document.getElementById("waModal");
-      document.getElementById("waTextArea").value = txt;
-      modal.classList.add("show");
-      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).catch(()=>{});
+    function updateLivePreview() {
+      saveDailyState();
+      const reportText = generateIndusWokReport();
+      const ta = document.getElementById("liveWaTextArea");
+      if (ta) ta.value = reportText;
     }
 
-    function closeModal() { document.getElementById("waModal").classList.remove("show"); }
+    function copyLiveText() {
+      const ta = document.getElementById("liveWaTextArea");
+      if (!ta) return;
+      ta.select(); ta.setSelectionRange(0, 99999);
+      
+      // Try modern clipboard API first
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(ta.value).then(() => {
+          showToast("✅ Exact Indus Wok Roster copied to clipboard!");
+        }).catch(() => { fallbackCopy(); });
+      } else {
+        fallbackCopy();
+      }
+    }
 
-    function copyModalText() {
-      const ta = document.getElementById("waTextArea"); ta.select(); ta.setSelectionRange(0, 99999);
-      try { document.execCommand("copy"); showToast("✅ WhatsApp Report copied to clipboard!"); closeModal(); }
-      catch(e) { alert("Please press Ctrl+C or Cmd+C to copy!"); }
+    function fallbackCopy() {
+      try {
+        document.execCommand("copy");
+        showToast("✅ Exact Indus Wok Roster copied to clipboard!");
+      } catch (e) {
+        alert("Please manually press Ctrl+C or Cmd+C to copy!");
+      }
     }
 
     function exportToCSV() {
       const numDays = getDaysInMonth(currentYear, currentMonth);
       const mData = rosterData[currentYear][currentMonth];
-      let csv = `Staff Name,Role,Station,Target Quota,Assigned Leaves,`;
+      let csv = `Staff Name,Role,Station,Shift Hours,Target Quota,Assigned Leaves,`;
       for (let d = 1; d <= numDays; d++) csv += `Day ${d},`;
       csv += `\n`;
       staffList.forEach(s => {
         let leaveCount = sumLeaves(s.id, numDays, mData);
         const target = getTargetQuota(s, currentYear, currentMonth);
-        let row = `"${s.name}","${s.role}","${s.station}",${target},${leaveCount},`;
+        let row = `"${s.name}","${s.role}","${s.station}","${s.hours}",${target},${leaveCount},`;
         for (let d = 1; d <= numDays; d++) row += `"${mData[s.id][d]}",`;
         csv += row + `\n`;
       });
       const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
       const link = document.createElement("a");
       link.setAttribute("href", URL.createObjectURL(blob));
-      link.setAttribute("download", `Restaurant_Roster_${months[currentMonth]}_${currentYear}.csv`);
+      link.setAttribute("download", `Indus_Wok_Roster_${months[currentMonth]}_${currentYear}.csv`);
       document.body.appendChild(link); link.click(); document.body.removeChild(link);
       showToast("📥 CSV Exported successfully!");
     }
